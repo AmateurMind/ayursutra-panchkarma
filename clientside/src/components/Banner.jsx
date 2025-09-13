@@ -10,8 +10,8 @@ const Banner = () => {
       {/* ---------- Left Side -------- */}
       <div className="flex-1 py-8 sm:py-10 md:py-16 lg:py-24 lg:pl-5">
         <div className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold text-white">
-          <p>Book Consultation</p>
-          <p className="mt-4">With 100+ Certified Ayurvedic Practitioners</p>
+          <p>Begin Your PanchKarma Journey</p>
+          <p className="mt-4">With 100+ Certified PanchKarma Specialists</p>
         </div>
         <button
           onClick={() => {
@@ -20,7 +20,7 @@ const Banner = () => {
           }}
           className="bg-white text-sm sm:text-base text-gray-600 px-8 py-3 rounded-full mt-6 hover:scale-105 transition-all"
         >
-          Create account
+          Start Your Wellness Journey
         </button>
       </div>
 

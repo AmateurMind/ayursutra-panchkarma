@@ -1,41 +1,170 @@
-import React from "react";
+import React, { useContext } from "react";
 import { assets } from "../assets/assets";
+import { AppContext } from "../context/AppContext";
+import Header from "../components/ui/Header";
+import ContactForm from "../components/ui/ContactForm";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+  const { token } = useContext(AppContext);
+
+  const handleFormSuccess = (result) => {
+    toast.success("Thank you! Your message has been sent successfully. We'll get back to you soon.");
+  };
+
+  const handleFormError = (error) => {
+    toast.error("Sorry, there was an error sending your message. Please try again or call us directly.");
+  };
+
+  const handleLogout = () => {
+    console.log('Logout clicked');
+  };
+
   return (
-    <div>
-      <div className="text-center text-2xl pt-10 text-gray-500">
-        <p>
-          CONTACT <span className="text-gray-700 font-semibold">US</span>
-        </p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header
+        userRole="patient"
+        isAuthenticated={!!token}
+        userName="User"
+        onLogout={handleLogout}
+      />
+      
+      <main className="pt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-heading font-bold text-foreground mb-4">
+              Contact <span className="text-primary">PanchKarma Wellness</span>
+            </h1>
+            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+              Get in touch with our PanchKarma specialists for therapy bookings, wellness consultations, or assistance with your detoxification journey.
+            </p>
+          </div>
 
-      <div className="my-10 flex flex-col justify-center md:flex-row gap-10 mb-28 text-sm">
-        <img
-          className="w-full md:max-w-[360px]"
-          src={assets.contact_image}
-          alt=""
-        />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            {/* Contact Form */}
+            <ContactForm
+              title="Send Us a Message"
+              description="Fill out the form below and we'll get back to you as soon as possible."
+              accessKey="8501ef93-4fb1-427e-b8f8-4c34686a53a6"
+              onSuccess={handleFormSuccess}
+              onError={handleFormError}
+            />
 
-        <div className="flex flex-col justify-center items-start gap-6">
-          <p className="font-semibold text-lg text-gray-600">OUR OFFICE</p>
-          <p className="text-gray-500">
-            54709 Willms Station <br /> Suite 350, Washington, USA
-          </p>
-          <p className="text-gray-500">
-            Tel: (415) 555‑0132 <br /> Email: elyseniyibizi502@gmail.com
-          </p>
-          <p className="font-semibold text-lg text-gray-600">
-            CAREERS AT AYURSUTRA
-          </p>
-          <p className="text-gray-500">
-            Join our mission to bring authentic Ayurvedic healthcare to the world.
-          </p>
-          <button className="border border-primary px-8 py-4 text-sm hover:bg-primary hover:text-white transition-all duration-500">
-            Explore Jobs
-          </button>
+            {/* Contact Information */}
+            <div className="space-y-8">
+              {/* Office Info */}
+              <div className="bg-card rounded-lg p-6 shadow-breathing">
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-6 flex items-center gap-3">
+                  <span className="text-2xl">🏢</span>
+                  Our Office
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <span className="text-primary mt-1">📍</span>
+                    <div>
+                      <div className="font-medium text-foreground">Address</div>
+                      <div className="text-text-secondary">
+                        54709 Willms Station<br />
+                        Suite 350, Washington, USA
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-primary mt-1">📞</span>
+                    <div>
+                      <div className="font-medium text-foreground">Phone</div>
+                      <div className="text-text-secondary">
+                        <a href="tel:+14155550132" className="hover:text-primary transition-colors">
+                          (415) 555-0132
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-primary mt-1">📧</span>
+                    <div>
+                      <div className="font-medium text-foreground">Email</div>
+                      <div className="text-text-secondary">
+                        <a href="mailto:support@panchkarmawellness.com" className="hover:text-primary transition-colors">
+                          support@panchkarmawellness.com
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-primary mt-1">⏰</span>
+                    <div>
+                      <div className="font-medium text-foreground">Business Hours</div>
+                      <div className="text-text-secondary">
+                        Mon-Fri: 8:00 AM - 8:00 PM<br />
+                        Sat-Sun: 9:00 AM - 5:00 PM<br />
+                        Emergency: 24/7 Support
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Careers Section */}
+              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-6">
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-4 flex items-center gap-3">
+                  <span className="text-2xl">🚀</span>
+                  Careers at PanchKarma Wellness
+                </h3>
+                <p className="text-text-secondary mb-6">
+                  Join our mission to bring authentic PanchKarma therapies and Ayurvedic wellness to people worldwide through traditional healing practices.
+                </p>
+                <button className="bg-primary text-primary-foreground px-6 py-3 rounded-md hover:bg-primary/90 transition-colors font-medium">
+                  Explore Job Opportunities
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="rounded-lg overflow-hidden shadow-breathing">
+                <img
+                  className="w-full h-64 object-cover"
+                  src={assets.contact_image}
+                  alt="Contact PanchKarma Wellness"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="bg-card rounded-lg p-8 shadow-breathing">
+            <h2 className="text-2xl font-heading font-semibold text-foreground mb-6 text-center">
+              Frequently Asked Questions
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">How do I book a PanchKarma therapy?</h4>
+                <p className="text-text-secondary text-sm">
+                  Browse our certified PanchKarma specialists, select your desired therapy (Vamana, Virechana, etc.), choose a time slot, and confirm your booking.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">Can I reschedule my PanchKarma session?</h4>
+                <p className="text-text-secondary text-sm">
+                  Yes, but PanchKarma requires preparation. Please reschedule at least 3 days in advance to allow for proper pre-therapy protocols.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">How long does a PanchKarma program take?</h4>
+                <p className="text-text-secondary text-sm">
+                  Complete PanchKarma typically takes 7-21 days including preparation, therapy, and recovery phases based on individual needs.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">Are there any side effects of PanchKarma?</h4>
+                <p className="text-text-secondary text-sm">
+                  PanchKarma may cause temporary effects during detoxification. Our specialists monitor you closely and provide guidance throughout the process.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

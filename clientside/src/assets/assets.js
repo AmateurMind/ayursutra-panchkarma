@@ -60,28 +60,28 @@ export const assets = {
 
 export const specialityData = [
     {
-        speciality: 'Panchakarma Specialist',
+        speciality: 'Vamana Therapy',
         image: General_physician
     },
     {
-        speciality: 'Ayurvedic Gynecology',
-        image: Gynecologist
+        speciality: 'Virechana Therapy',
+        image: Gastroenterologist
     },
     {
-        speciality: 'Ayurvedic Dermatology',
+        speciality: 'Basti Therapy',
         image: Dermatologist
     },
     {
-        speciality: 'Ayurvedic Pediatrics',
-        image: Pediatricians
-    },
-    {
-        speciality: 'Ayurvedic Neurology',
+        speciality: 'Nasya Therapy',
         image: Neurologist
     },
     {
-        speciality: 'Ayurvedic Gastroenterology',
-        image: Gastroenterologist
+        speciality: 'Raktamokshana Therapy',
+        image: Gynecologist
+    },
+    {
+        speciality: 'Complete PanchKarma',
+        image: Pediatricians
     },
 ]
 

@@ -25,7 +25,7 @@ const Doctors = () => {
 
   return (
     <div>
-      <p className="text-gray-600">Browse through the doctors specialist.</p>
+      <p className="text-gray-600">Browse through our certified Ayurvedic practitioners.</p>
       <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
         <button
           className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${
@@ -42,89 +42,89 @@ const Doctors = () => {
         >
           <p
             onClick={() =>
-              speciality === "General physician"
+              speciality === "Panchakarma Specialist"
                 ? navigate("/doctors")
-                : navigate("/doctors/General physician")
+                : navigate("/doctors/Panchakarma Specialist")
             }
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "General physician"
-                ? "bg-indigo-100 text-black"
+              speciality === "Panchakarma Specialist"
+                ? "bg-primary bg-opacity-20 text-black"
                 : ""
             }`}
           >
-            General physician
+            Panchakarma Specialist
           </p>
           <p
             onClick={() =>
-              speciality === "Gynecologist"
+              speciality === "Ayurvedic Gynecology"
                 ? navigate("/doctors")
-                : navigate("/doctors/Gynecologist")
+                : navigate("/doctors/Ayurvedic Gynecology")
             }
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "Gynecologist" ? "bg-indigo-100 text-black" : ""
+              speciality === "Ayurvedic Gynecology" ? "bg-primary bg-opacity-20 text-black" : ""
             }`}
           >
-            Gynecologist
+            Ayurvedic Gynecology
           </p>
           <p
             onClick={() =>
-              speciality === "Dermatologist"
+              speciality === "Ayurvedic Dermatology"
                 ? navigate("/doctors")
-                : navigate("/doctors/Dermatologist")
+                : navigate("/doctors/Ayurvedic Dermatology")
             }
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "Dermatologist" ? "bg-indigo-100 text-black" : ""
+              speciality === "Ayurvedic Dermatology" ? "bg-primary bg-opacity-20 text-black" : ""
             }`}
           >
-            Dermatologist
+            Ayurvedic Dermatology
           </p>
           <p
             onClick={() =>
-              speciality === "Pediatricians"
+              speciality === "Ayurvedic Pediatrics"
                 ? navigate("/doctors")
-                : navigate("/doctors/Pediatricians")
+                : navigate("/doctors/Ayurvedic Pediatrics")
             }
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "Pediatricians" ? "bg-indigo-100 text-black" : ""
+              speciality === "Ayurvedic Pediatrics" ? "bg-primary bg-opacity-20 text-black" : ""
             }`}
           >
-            Pediatricians
+            Ayurvedic Pediatrics
           </p>
           <p
             onClick={() =>
-              speciality === "Neurologist"
+              speciality === "Ayurvedic Neurology"
                 ? navigate("/doctors")
-                : navigate("/doctors/Neurologist")
+                : navigate("/doctors/Ayurvedic Neurology")
             }
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "Neurologist" ? "bg-indigo-100 text-black" : ""
+              speciality === "Ayurvedic Neurology" ? "bg-primary bg-opacity-20 text-black" : ""
             }`}
           >
-            Neurologist
+            Ayurvedic Neurology
           </p>
           <p
             onClick={() =>
-              speciality === "Gastroenterologist"
+              speciality === "Ayurvedic Gastroenterology"
                 ? navigate("/doctors")
-                : navigate("/doctors/Gastroenterologist")
+                : navigate("/doctors/Ayurvedic Gastroenterology")
             }
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "Gastroenterologist"
-                ? "bg-indigo-100 text-black"
+              speciality === "Ayurvedic Gastroenterology"
+                ? "bg-primary bg-opacity-20 text-black"
                 : ""
             }`}
           >
-            Gastroenterologist
+            Ayurvedic Gastroenterology
           </p>
         </div>
         <div className="w-full grid grid-cols-auto gap-4 gap-y-6">
           {filterDoc.map((item, index) => (
             <div
               onClick={() => navigate(`/appointment/${item._id}`)}
-              className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
+              className="border border-primary border-opacity-30 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
               key={index}
             >
-              <img className="bg-blue-50" src={item.image} alt="" />
+              <img className="bg-primary bg-opacity-10" src={item.image} alt="" />
               <div className="p-4">
                 <div
                   className={`flex items-center gap-2 text-sm text-center ${

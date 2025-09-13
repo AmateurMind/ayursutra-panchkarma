@@ -40,7 +40,7 @@ const DoctorDashboard = () => {
               <p className="text-xl font-semibold text-gray-600">
                 {dashData.appointments}
               </p>
-              <p className="text-gray-400">Appointments</p>
+              <p className="text-gray-400">Consultations</p>
             </div>
           </div>
 
@@ -58,7 +58,7 @@ const DoctorDashboard = () => {
         <div className="bg-white">
           <div className="flex items-center gap-2.5 px-4 py-4 mt-10 rounded-t border">
             <img src={assets.list_icon} alt="" />
-            <p className="font-semibold">Latest Bookings</p>
+            <p className="font-semibold">Latest Consultation Bookings</p>
           </div>
 
           <div className="pt-4 border border-t-0">

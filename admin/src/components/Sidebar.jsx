@@ -33,7 +33,7 @@ const Sidebar = () => {
             to={"/all-appointments"}
           >
             <img src={assets.appointment_icon} alt="" />
-            <p className="hidden md:block">Appointments</p>
+            <p className="hidden md:block">Consultations</p>
           </NavLink>
 
           <NavLink
@@ -45,7 +45,7 @@ const Sidebar = () => {
             to={"/add-doctor"}
           >
             <img src={assets.add_icon} alt="" />
-            <p className="hidden md:block">Add Doctor</p>
+            <p className="hidden md:block">Add Practitioner</p>
           </NavLink>
 
           <NavLink
@@ -57,7 +57,7 @@ const Sidebar = () => {
             to={"/doctor-list"}
           >
             <img src={assets.people_icon} alt="" />
-            <p className="hidden md:block">Doctors List</p>
+            <p className="hidden md:block">Practitioners List</p>
           </NavLink>
         </ul>
       )}
@@ -85,7 +85,7 @@ const Sidebar = () => {
             to={"/doctor-appointments"}
           >
             <img src={assets.appointment_icon} alt="" />
-            <p className="hidden md:block">Appointments</p>
+            <p className="hidden md:block">Consultations</p>
           </NavLink>
 
           <NavLink

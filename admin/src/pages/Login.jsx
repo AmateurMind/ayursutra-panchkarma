@@ -75,7 +75,7 @@ const Login = () => {
         </button>
         {state === "Admin" ? (
           <p>
-            Doctor Login?{" "}
+            Practitioner Login?{" "}
             <span
               className="text-primary underline cursor-pointer"
               onClick={() => setState("Doctor")}

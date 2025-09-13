@@ -12,7 +12,7 @@ const AddDoctor = () => {
   const [experience, SetExperience] = useState("1 Year");
   const [fees, SetFees] = useState("");
   const [about, SetAbout] = useState("");
-  const [speciality, SetSpeciality] = useState("General physician");
+  const [speciality, SetSpeciality] = useState("Panchakarma Specialist");
   const [degree, SetDegree] = useState("");
   const [address1, SetAddress1] = useState("");
   const [address2, SetAddress2] = useState("");
@@ -76,7 +76,7 @@ const AddDoctor = () => {
 
   return (
     <form onSubmit={onSubmitHandler} className="m-5 w-full">
-      <p className="mb-3 text-lg font-medium">Add Doctor</p>
+      <p className="mb-3 text-lg font-medium">Add Ayurvedic Practitioner</p>
       <div className="bg-white px-8 py-8 border rounded w-full max-w-4xl max-h-[80vh] overflow-y-scroll">
         <div className="flex items-center gap-4 mb-8 text-gray-500">
           <label htmlFor="doc-img">
@@ -93,14 +93,14 @@ const AddDoctor = () => {
             hidden
           />
           <p>
-            Upload doctor <br /> picture
+            Upload practitioner <br /> picture
           </p>
         </div>
 
         <div className="flex flex-col lg:flex-row items-start gap-10 text-gray-600">
           <div className="w-full lg:flex-1 flex flex-col gap-4">
             <div className="flex-1 flex flex-col gap-1">
-              <p>Doctor Name</p>
+              <p>Practitioner Name</p>
               <input
                 onChange={(e) => SetName(e.target.value)}
                 value={name}
@@ -112,7 +112,7 @@ const AddDoctor = () => {
             </div>
 
             <div className="flex-1 flex flex-col gap-1">
-              <p>Doctor Email</p>
+              <p>Practitioner Email</p>
               <input
                 onChange={(e) => SetEmail(e.target.value)}
                 value={email}
@@ -124,7 +124,7 @@ const AddDoctor = () => {
             </div>
 
             <div className="flex-1 flex flex-col gap-1">
-              <p>Doctor Password</p>
+              <p>Practitioner Password</p>
               <input
                 onChange={(e) => SetPassword(e.target.value)}
                 value={password}
@@ -180,12 +180,12 @@ const AddDoctor = () => {
                 name=""
                 id=""
               >
-                <option value="General physician">General physician</option>
-                <option value="Gynecologist">Gynecologist</option>
-                <option value="Dermatologist">Dermatologist</option>
-                <option value="Pediatricians">Pediatricians</option>
-                <option value="Neurologist">Neurologist</option>
-                <option value="Gastroenterologist">Gastroenterologist</option>
+                <option value="Panchakarma Specialist">Panchakarma Specialist</option>
+                <option value="Ayurvedic Gynecology">Ayurvedic Gynecology</option>
+                <option value="Ayurvedic Dermatology">Ayurvedic Dermatology</option>
+                <option value="Ayurvedic Pediatrics">Ayurvedic Pediatrics</option>
+                <option value="Ayurvedic Neurology">Ayurvedic Neurology</option>
+                <option value="Ayurvedic Gastroenterology">Ayurvedic Gastroenterology</option>
               </select>
             </div>
 
@@ -224,12 +224,12 @@ const AddDoctor = () => {
         </div>
 
         <div>
-          <p className="mt-4 mb-2">About Doctor</p>
+          <p className="mt-4 mb-2">About Practitioner</p>
           <textarea
             onChange={(e) => SetAbout(e.target.value)}
             value={about}
             className="w-full px-4 pt-2 border rounded"
-            placeholder="write about doctor"
+            placeholder="write about practitioner's Ayurvedic expertise"
             rows={5}
             required
           />
@@ -239,7 +239,7 @@ const AddDoctor = () => {
           type="submit"
           className="bg-primary px-10 py-3 mt-4 text-white rounded-full"
         >
-          Add doctor
+          Add practitioner
         </button>
       </div>
     </form>

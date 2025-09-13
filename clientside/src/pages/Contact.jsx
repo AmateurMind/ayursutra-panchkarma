@@ -34,10 +34,10 @@ const Contact = () => {
           {/* Header Section */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-heading font-bold text-foreground mb-4">
-              Contact <span className="text-primary">PanchKarma Wellness</span>
+              Contact <span className="text-primary">Ayursutra</span>
             </h1>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Get in touch with our PanchKarma specialists for therapy bookings, wellness consultations, or assistance with your detoxification journey.
+              Get in touch with our Ayursutra specialists for therapy bookings, wellness consultations, or assistance with your detoxification journey.
             </p>
           </div>
 
@@ -86,7 +86,7 @@ const Contact = () => {
                     <div>
                       <div className="font-medium text-foreground">Email</div>
                       <div className="text-text-secondary">
-                        <a href="mailto:support@panchkarmawellness.com" className="hover:text-primary transition-colors">
+                        <a href="mailto:support@karmpanchawellness.com" className="hover:text-primary transition-colors">
                           support@panchkarmawellness.com
                         </a>
                       </div>
@@ -110,7 +110,7 @@ const Contact = () => {
               <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-6">
                 <h3 className="text-xl font-heading font-semibold text-foreground mb-4 flex items-center gap-3">
                   <span className="text-2xl">🚀</span>
-                  Careers at PanchKarma Wellness
+                  Careers at Ayursutra
                 </h3>
                 <p className="text-text-secondary mb-6">
                   Join our mission to bring authentic PanchKarma therapies and Ayurvedic wellness to people worldwide through traditional healing practices.

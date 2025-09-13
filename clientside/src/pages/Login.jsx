@@ -9,6 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [state, setState] = useState("Sign Up");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +18,20 @@ const Login = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
+    // Prevent multiple submissions
+    if (isLoading) return;
+
+    // Validate form inputs
+    if (state === "Sign Up" && (!name || !email || !password)) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    if (state === "Login" && (!email || !password)) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setIsLoading(true);
     try {
       if (state === "Sign Up") {
         const { data } = await axios.post(backendUrl + "/api/user/register", {
@@ -44,6 +59,8 @@ const Login = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -98,9 +115,18 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="bg-primary text-white w-full py-2 rounded-md text-base"
+          disabled={isLoading}
+          className={`w-full py-2 rounded-md text-base ${
+            isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-primary hover:bg-primary/90"
+          } text-white transition-colors`}
         >
-          {state === "Sign Up" ? "Create Account" : "Login"}
+          {isLoading
+            ? "Please wait..."
+            : state === "Sign Up"
+            ? "Create Account"
+            : "Login"}
         </button>
         {state === "Sign Up" ? (
           <p>

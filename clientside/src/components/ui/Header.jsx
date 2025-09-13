@@ -102,7 +102,7 @@ const Header = ({
       setMessages([
         {
           id: 1,
-          text: "Hello! I'm your PanchKarma Wellness Assistant. How can I help you with your Panchkarma treatments and wellness journey today?",
+          text: "Hello! I'm your Ayursutra Assistant. How can I help you with your Panchkarma treatments and wellness journey today?",
           sender: 'bot',
           timestamp: new Date()
         }
@@ -145,7 +145,7 @@ const Header = ({
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are PanchKarma Wellness Assistant, a helpful and knowledgeable chatbot for a Panchkarma wellness and therapy platform. 
+              text: `You are Ayursutra Assistant, a helpful and knowledgeable chatbot for a Panchkarma wellness and therapy platform.
               You should provide helpful, accurate information about:
               - Panchkarma treatments and their benefits (Vamana, Virechana, Basti, Nasya, Raktamokshana)
               - Booking appointments with certified Panchkarma specialists and therapists
@@ -424,7 +424,7 @@ const Header = ({
                 </svg>
               </div>
               <div className="font-heading font-semibold text-xl text-foreground">
-                PanchKarma Wellness
+                Ayursutra
               </div>
             </div>
             {/* Chatbot icon next to logo */}

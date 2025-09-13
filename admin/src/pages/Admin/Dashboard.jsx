@@ -17,80 +17,127 @@ const Dashboard = () => {
 
   return (
     dashData && (
-      <div className="m-5">
-        <div className="flex flex-wrap gap-3">
-          <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all">
-            <img className="w-14" src={assets.doctor_icon} alt="" />
-            <div>
-              <p className="text-xl font-semibold text-gray-600">
-                {dashData.doctors}
-              </p>
-              <p className="text-gray-400">Practitioners</p>
+      <div className="p-6 space-y-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">🏥 PanchKarma Wellness Dashboard</h1>
+          <p className="text-text-secondary font-body">Overview of your wellness center operations</p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="card-breathing hover-lift group">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center shadow-breathing group-hover:scale-110 transition-transform">
+                <span className="text-2xl">👨‍⚕️</span>
+              </div>
+              <div>
+                <p className="text-3xl font-heading font-bold text-foreground">
+                  {dashData.doctors}
+                </p>
+                <p className="text-text-secondary font-body">PanchKarma Specialists</p>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all">
-            <img className="w-14" src={assets.appointments_icon} alt="" />
-            <div>
-              <p className="text-xl font-semibold text-gray-600">
-                {dashData.appointments}
-              </p>
-              <p className="text-gray-400">Consultations</p>
+          <div className="card-breathing hover-lift group">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-gradient-to-r from-secondary to-accent rounded-xl flex items-center justify-center shadow-breathing group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🌿</span>
+              </div>
+              <div>
+                <p className="text-3xl font-heading font-bold text-foreground">
+                  {dashData.appointments}
+                </p>
+                <p className="text-text-secondary font-body">Therapy Sessions</p>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all">
-            <img className="w-14" src={assets.patients_icon} alt="" />
-            <div>
-              <p className="text-xl font-semibold text-gray-600">
-                {dashData.patients}
-              </p>
-              <p className="text-gray-400">Patients</p>
+          <div className="card-breathing hover-lift group">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-gradient-to-r from-accent to-primary rounded-xl flex items-center justify-center shadow-breathing group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🧘‍♀️</span>
+              </div>
+              <div>
+                <p className="text-3xl font-heading font-bold text-foreground">
+                  {dashData.patients}
+                </p>
+                <p className="text-text-secondary font-body">Wellness Seekers</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white">
-          <div className="flex items-center gap-2.5 px-4 py-4 mt-10 rounded-t border">
-            <img src={assets.list_icon} alt="" />
-            <p className="font-semibold">Latest Consultation Bookings</p>
+        {/* Latest Appointments */}
+        <div className="card-breathing">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+              <span className="text-primary text-lg">📅</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-heading font-semibold text-foreground">Latest PanchKarma Bookings</h2>
+              <p className="text-sm text-text-secondary font-body">Recent therapy session appointments</p>
+            </div>
           </div>
 
-          <div className="pt-4 border border-t-0">
-            {dashData.latestAppointments.map((item, index) => (
-              <div
-                className="flex items-center px-6 py-3 hover:bg-gray-100"
-                key={index}
-              >
-                <img
-                  className="rounded-full w-10"
-                  src={item.docData.image}
-                  alt=""
-                />
-                <div className="flex-1 text-sm">
-                  <p className="text-gray-800 font-medium">
-                    {item.docData.name}
-                  </p>
-                  <p className="text-gray-600">
-                    {slotDateFormat(item.slotDate)}
-                  </p>
-                </div>
-                {item.cancelled ? (
-                  <p className="text-red-400 text-xs font-medium">Cancelled</p>
-                ) : item.isCompleted ? (
-                  <p className="text-green-500 text-xs font-medium">
-                    Completed
-                  </p>
-                ) : (
+          <div className="space-y-4">
+            {dashData.latestAppointments.length > 0 ? (
+              dashData.latestAppointments.map((item, index) => (
+                <div
+                  className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-primary/20"
+                  key={index}
+                >
                   <img
-                    onClick={() => cancelAppointment(item._id)}
-                    className="w-10 cursor-pointer"
-                    src={assets.cancel_icon}
-                    alt=""
+                    className="w-12 h-12 rounded-full object-cover shadow-breathing"
+                    src={item.docData.image}
+                    alt={item.docData.name}
                   />
-                )}
+                  <div className="flex-1">
+                    <p className="font-heading font-semibold text-foreground mb-1">
+                      Dr. {item.docData.name}
+                    </p>
+                    <p className="text-sm text-text-secondary font-body">
+                      🗓 {slotDateFormat(item.slotDate)} • {item.slotTime}
+                    </p>
+                    <p className="text-sm text-primary font-body">
+                      {item.docData.speciality}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    {item.cancelled ? (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20">
+                        ❌ Cancelled
+                      </span>
+                    ) : item.isCompleted ? (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
+                        ✅ Completed
+                      </span>
+                    ) : (
+                      <div className="space-y-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-warning/10 text-warning border border-warning/20">
+                          ⏳ Upcoming
+                        </span>
+                        <button
+                          onClick={() => cancelAppointment(item._id)}
+                          className="block w-full text-xs text-error hover:bg-error/5 px-2 py-1 rounded transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">📅</span>
+                </div>
+                <h3 className="font-heading font-semibold text-foreground mb-2">No Recent Bookings</h3>
+                <p className="text-text-secondary font-body">New therapy appointments will appear here</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

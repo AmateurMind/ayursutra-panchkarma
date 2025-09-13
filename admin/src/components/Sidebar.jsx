@@ -9,97 +9,123 @@ const Sidebar = () => {
   const { dToken } = useContext(DoctorContext);
 
   return (
-    <div className="min-h-screen bg-white border-r">
+    <div className="min-h-screen bg-card/80 backdrop-blur-sm border-r border-border shadow-breathing">
       {aToken && (
-        <ul className="text-[#515151] mt-5">
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/admin-dashboard"}
-          >
-            <img src={assets.home_icon} alt="" />
-            <p className="hidden md:block">Dashboard</p>
-          </NavLink>
+        <div className="p-4">
+          <div className="mb-6">
+            <h2 className="text-lg font-heading font-semibold text-foreground mb-1">🏥 Admin Panel</h2>
+            <p className="text-sm font-body text-text-secondary">PanchKarma Wellness Management</p>
+          </div>
+          <ul className="space-y-2">
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/admin-dashboard"}
+            >
+              <span className="text-lg">📈</span>
+              <p className="hidden md:block font-medium font-body">Dashboard</p>
+            </NavLink>
 
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/all-appointments"}
-          >
-            <img src={assets.appointment_icon} alt="" />
-            <p className="hidden md:block">Consultations</p>
-          </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/all-appointments"}
+            >
+              <span className="text-lg">📅</span>
+              <p className="hidden md:block font-medium font-body">PanchKarma Sessions</p>
+            </NavLink>
 
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/add-doctor"}
-          >
-            <img src={assets.add_icon} alt="" />
-            <p className="hidden md:block">Add Practitioner</p>
-          </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/add-doctor"}
+            >
+              <span className="text-lg">➕</span>
+              <p className="hidden md:block font-medium font-body">Add Specialist</p>
+            </NavLink>
 
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/doctor-list"}
-          >
-            <img src={assets.people_icon} alt="" />
-            <p className="hidden md:block">Practitioners List</p>
-          </NavLink>
-        </ul>
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/doctor-list"}
+            >
+              <span className="text-lg">👨‍⚕️</span>
+              <p className="hidden md:block font-medium font-body">PanchKarma Specialists</p>
+            </NavLink>
+          </ul>
+        </div>
       )}
 
       {dToken && (
-        <ul className="text-[#515151] mt-5">
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/doctor-dashboard"}
-          >
-            <img src={assets.home_icon} alt="" />
-            <p className="hidden md:block">Dashboard</p>
-          </NavLink>
+        <div className="p-4">
+          <div className="mb-6">
+            <h2 className="text-lg font-heading font-semibold text-foreground mb-1">🌿 Specialist Portal</h2>
+            <p className="text-sm font-body text-text-secondary">PanchKarma Practice Management</p>
+          </div>
+          <ul className="space-y-2">
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/doctor-dashboard"}
+            >
+              <span className="text-lg">📈</span>
+              <p className="hidden md:block font-medium font-body">Dashboard</p>
+            </NavLink>
 
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/doctor-appointments"}
-          >
-            <img src={assets.appointment_icon} alt="" />
-            <p className="hidden md:block">Consultations</p>
-          </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/doctor-appointments"}
+            >
+              <span className="text-lg">📅</span>
+              <p className="hidden md:block font-medium font-body">My Sessions</p>
+            </NavLink>
 
-          <NavLink
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""
-              }`
-            }
-            to={"/doctor-profile"}
-          >
-            <img src={assets.people_icon} alt="" />
-            <p className="hidden md:block">Profile</p>
-          </NavLink>
-        </ul>
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 ${
+                  isActive 
+                    ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-breathing" 
+                    : "text-foreground hover:bg-primary/5 hover:text-primary"
+                }`
+              }
+              to={"/doctor-profile"}
+            >
+              <span className="text-lg">📝</span>
+              <p className="hidden md:block font-medium font-body">My Profile</p>
+            </NavLink>
+          </ul>
+        </div>
       )}
     </div>
   );

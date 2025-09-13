@@ -12,7 +12,7 @@ const AddDoctor = () => {
   const [experience, SetExperience] = useState("1 Year");
   const [fees, SetFees] = useState("");
   const [about, SetAbout] = useState("");
-  const [speciality, SetSpeciality] = useState("Panchakarma Specialist");
+  const [speciality, SetSpeciality] = useState("Vamana Therapy");
   const [degree, SetDegree] = useState("");
   const [address1, SetAddress1] = useState("");
   const [address2, SetAddress2] = useState("");
@@ -75,174 +75,206 @@ const AddDoctor = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className="m-5 w-full">
-      <p className="mb-3 text-lg font-medium">Add Ayurvedic Practitioner</p>
-      <div className="bg-white px-8 py-8 border rounded w-full max-w-4xl max-h-[80vh] overflow-y-scroll">
-        <div className="flex items-center gap-4 mb-8 text-gray-500">
-          <label htmlFor="doc-img">
-            <img
-              className="w-16 bg-gray-100 rounded-full cursor-pointer"
-              src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
-              alt=""
-            />
+    <div className="p-6 space-y-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-heading font-bold text-foreground mb-2">👨‍⚕️ Add PanchKarma Specialist</h1>
+        <p className="text-text-secondary font-body">Register a new certified PanchKarma therapist to your wellness center</p>
+      </div>
+
+      <form onSubmit={onSubmitHandler} className="card-breathing max-w-4xl">
+        <div className="space-y-8">
+        {/* Photo Upload Section */}
+        <div className="flex items-center gap-6 p-6 bg-muted/30 rounded-lg border border-border">
+          <label htmlFor="doc-img" className="cursor-pointer group">
+            <div className="relative">
+              <img
+                className="w-20 h-20 rounded-full object-cover shadow-breathing border-2 border-primary/20 group-hover:border-primary/40 transition-colors"
+                src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
+                alt="Specialist photo"
+              />
+              <div className="absolute inset-0 bg-black/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white text-xs">📷</span>
+              </div>
+            </div>
           </label>
           <input
             onChange={(e) => SetDocImg(e.target.files[0])}
             type="file"
             id="doc-img"
+            accept="image/*"
             hidden
           />
-          <p>
-            Upload practitioner <br /> picture
-          </p>
+          <div>
+            <h3 className="font-heading font-semibold text-foreground mb-1">Specialist Photo</h3>
+            <p className="text-sm text-text-secondary font-body">Upload a professional photo of the PanchKarma specialist</p>
+            <p className="text-xs text-text-secondary font-body mt-1">Recommended: Square image, min 400x400px</p>
+          </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-start gap-10 text-gray-600">
-          <div className="w-full lg:flex-1 flex flex-col gap-4">
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Practitioner Name</p>
+        {/* Form Fields */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column */}
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">👨‍⚕️ Specialist Name</label>
               <input
                 onChange={(e) => SetName(e.target.value)}
                 value={name}
-                className="border rounded px-3 py-2"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
                 type="text"
-                placeholder="Name"
+                placeholder="Dr. Full Name"
                 required
               />
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Practitioner Email</p>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">📧 Email Address</label>
               <input
                 onChange={(e) => SetEmail(e.target.value)}
                 value={email}
-                className="border rounded px-3 py-2"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
                 type="email"
-                placeholder="Email"
+                placeholder="specialist@panchkarmawellness.com"
                 required
               />
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Practitioner Password</p>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">🔒 Login Password</label>
               <input
                 onChange={(e) => SetPassword(e.target.value)}
                 value={password}
-                className="border rounded px-3 py-2"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
                 type="password"
-                placeholder="Password"
+                placeholder="Create a secure password"
                 required
               />
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Experience</p>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">⭐ Experience Level</label>
               <select
                 onChange={(e) => SetExperience(e.target.value)}
                 value={experience}
-                className="border rounded px-3 py-2"
-                name=""
-                id=""
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
               >
-                <option value="1 Year">1 Year</option>
-                <option value="2 Year">2 Year</option>
-                <option value="3 Year">3 Year</option>
-                <option value="4 Year">4 Year</option>
-                <option value="5 Year">5 Year</option>
-                <option value="6 Year">6 Year</option>
-                <option value="7 Year">7 Year</option>
-                <option value="8 Year">8 Year</option>
-                <option value="9 Year">9 Year</option>
-                <option value="10 Year">10 Year</option>
+                <option value="1 Year">1 Year Experience</option>
+                <option value="2 Years">2 Years Experience</option>
+                <option value="3 Years">3 Years Experience</option>
+                <option value="4 Years">4 Years Experience</option>
+                <option value="5 Years">5 Years Experience</option>
+                <option value="6 Years">6 Years Experience</option>
+                <option value="7 Years">7 Years Experience</option>
+                <option value="8 Years">8 Years Experience</option>
+                <option value="9 Years">9 Years Experience</option>
+                <option value="10+ Years">10+ Years Experience</option>
+                <option value="15+ Years">15+ Years Experience</option>
+                <option value="20+ Years">20+ Years Experience</option>
               </select>
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Fees</p>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">💰 Consultation Fee (₹)</label>
               <input
                 onChange={(e) => SetFees(e.target.value)}
                 value={fees}
-                className="border rounded px-3 py-2"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
                 type="number"
-                placeholder="fees"
+                placeholder="2500"
+                min="500"
+                max="50000"
                 required
               />
+              <p className="text-xs text-text-secondary font-body">Fee per PanchKarma consultation session</p>
             </div>
           </div>
 
-          <div className="w-full lg:flex-1 flex flex-col gap-4">
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Speciality</p>
+          {/* Right Column */}
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">🌿 PanchKarma Specialization</label>
               <select
                 onChange={(e) => SetSpeciality(e.target.value)}
                 value={speciality}
-                className="border rounded px-3 py-2"
-                name=""
-                id=""
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
               >
-                <option value="Panchakarma Specialist">Panchakarma Specialist</option>
-                <option value="Ayurvedic Gynecology">Ayurvedic Gynecology</option>
-                <option value="Ayurvedic Dermatology">Ayurvedic Dermatology</option>
-                <option value="Ayurvedic Pediatrics">Ayurvedic Pediatrics</option>
-                <option value="Ayurvedic Neurology">Ayurvedic Neurology</option>
-                <option value="Ayurvedic Gastroenterology">Ayurvedic Gastroenterology</option>
+                <option value="Vamana Therapy">Vamana Therapy (Therapeutic Emesis)</option>
+                <option value="Virechana Therapy">Virechana Therapy (Therapeutic Purgation)</option>
+                <option value="Basti Therapy">Basti Therapy (Medicated Enema)</option>
+                <option value="Nasya Therapy">Nasya Therapy (Nasal Administration)</option>
+                <option value="Raktamokshana Therapy">Raktamokshana Therapy (Bloodletting)</option>
+                <option value="Complete PanchKarma">Complete PanchKarma Specialist</option>
+                <option value="Ayurvedic Pulse Diagnosis">Ayurvedic Pulse Diagnosis</option>
+                <option value="Panchakosha Therapy">Panchakosha Therapy</option>
               </select>
+              <p className="text-xs text-text-secondary font-body">Primary area of PanchKarma expertise</p>
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Education</p>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">🎓 Education & Qualifications</label>
               <input
                 onChange={(e) => SetDegree(e.target.value)}
                 value={degree}
-                className="border rounded px-3 py-2"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
                 type="text"
-                placeholder="Education"
+                placeholder="BAMS, MD (Panchakarma)"
                 required
               />
+              <p className="text-xs text-text-secondary font-body">Ayurvedic degrees and certifications</p>
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Address</p>
-              <input
-                onChange={(e) => SetAddress1(e.target.value)}
-                value={address1}
-                className="border rounded px-3 py-2"
-                type="text"
-                placeholder="address 1"
-                required
-              />
-              <input
-                onChange={(e) => SetAddress2(e.target.value)}
-                value={address2}
-                className="border rounded px-3 py-2"
-                type="text"
-                placeholder="address 2"
-                required
-              />
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-foreground font-body">📍 Practice Location</label>
+              <div className="space-y-3">
+                <input
+                  onChange={(e) => SetAddress1(e.target.value)}
+                  value={address1}
+                  className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
+                  type="text"
+                  placeholder="Clinic/Center Name & Address Line 1"
+                  required
+                />
+                <input
+                  onChange={(e) => SetAddress2(e.target.value)}
+                  value={address2}
+                  className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body"
+                  type="text"
+                  placeholder="City, State, Pincode"
+                  required
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        <div>
-          <p className="mt-4 mb-2">About Practitioner</p>
+        {/* About Section */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-foreground font-body">📜 About the PanchKarma Specialist</label>
           <textarea
             onChange={(e) => SetAbout(e.target.value)}
             value={about}
-            className="w-full px-4 pt-2 border rounded"
-            placeholder="write about practitioner's Ayurvedic expertise"
+            className="w-full px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 font-body resize-vertical"
+            placeholder="Describe the specialist's PanchKarma expertise, training background, approach to treatment, areas of focus, and philosophy towards Ayurvedic healing..."
             rows={5}
             required
           />
+          <p className="text-xs text-text-secondary font-body">Detailed information about their PanchKarma practice and expertise</p>
         </div>
 
-        <button
-          type="submit"
-          className="bg-primary px-10 py-3 mt-4 text-white rounded-full"
-        >
-          Add practitioner
-        </button>
-      </div>
-    </form>
+        {/* Submit Button */}
+        <div className="flex justify-end pt-6 border-t border-border">
+          <button
+            type="submit"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-8 py-3 rounded-lg transition-all duration-200 shadow-breathing hover:shadow-elevated font-body flex items-center gap-2"
+          >
+            <span>✨</span>
+            Add PanchKarma Specialist
+          </button>
+        </div>
+        </div>
+      </form>
+    </div>
   );
 };
 

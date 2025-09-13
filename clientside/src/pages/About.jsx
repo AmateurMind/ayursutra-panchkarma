@@ -29,7 +29,7 @@ const About = () => {
         <section className="bg-gradient-to-b from-primary/5 to-background py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">
-              About <span className="text-primary">PanchKarma Wellness</span>
+              About <span className="text-primary">Ayursutra</span>
             </h1>
             <p className="text-xl text-text-secondary max-w-3xl mx-auto">
               Your trusted partner in authentic PanchKarma therapies and holistic Ayurvedic wellness.
@@ -46,7 +46,7 @@ const About = () => {
                 <img
                   className="w-full rounded-2xl shadow-elevated"
                   src={assets.about_image}
-                  alt="PanchKarma Wellness Center"
+                  alt="Ayursutra Wellness Center"
                 />
               </div>
               
@@ -54,7 +54,7 @@ const About = () => {
               <div className="order-1 lg:order-2 space-y-6">
                 <div className="space-y-4">
                   <p className="text-lg text-text-primary leading-relaxed">
-                    Welcome to <strong className="text-primary">PanchKarma Wellness</strong>, your trusted destination for authentic PanchKarma therapies. We specialize in the five classical detoxification and rejuvenation treatments of Ayurveda, bringing you ancient wisdom through modern, professional practice.
+                    Welcome to <strong className="text-primary">Ayursutra</strong>, your trusted destination for authentic PanchKarma therapies. We specialize in the five classical detoxification and rejuvenation treatments of Ayurveda, bringing you ancient wisdom through modern, professional practice.
                   </p>
                   <p className="text-lg text-text-primary leading-relaxed">
                     Our center is committed to preserving and delivering genuine PanchKarma treatments - <strong>Vamana, Virechana, Basti, Nasya, and Raktamokshana</strong> - administered by certified specialists who understand the profound healing potential of these time-tested therapies.
@@ -79,10 +79,10 @@ const About = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-                Why Choose <span className="text-primary">PanchKarma Wellness</span>
+                Why Choose <span className="text-primary">Ayursutra</span>
               </h2>
               <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-                Discover what makes our PanchKarma center the trusted choice for authentic Ayurvedic detoxification and healing.
+                Discover what makes our Ayursutra center the trusted choice for authentic Ayurvedic detoxification and healing.
               </p>
             </div>
             
@@ -125,10 +125,10 @@ const About = () => {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-gradient-to-r from-primary to-secondary p-8 md:p-12 rounded-2xl text-white">
               <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-                Ready to Begin Your PanchKarma Journey?
+                Ready to Begin Your Ayursutra Journey?
               </h2>
               <p className="text-xl mb-8 opacity-90">
-                Connect with our certified PanchKarma specialists and discover the transformative power of authentic Ayurvedic detoxification.
+                Connect with our certified Ayursutra specialists and discover the transformative power of authentic Ayurvedic detoxification.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button

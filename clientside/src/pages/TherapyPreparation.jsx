@@ -441,13 +441,7 @@ const TherapyPreparation = () => {
                     📅 View My Therapies
                   </Button>
 
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    onClick={handleContactSupport}
-                  >
-                    💬 Contact Specialist
-                  </Button>
+                  
 
                   <Button
                     variant="outline"

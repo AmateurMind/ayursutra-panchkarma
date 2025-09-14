@@ -8,96 +8,92 @@ const TherapyPreparation = () => {
   const navigate = useNavigate();
   const { token } = useContext(AppContext);
   const [activeTab, setActiveTab] = useState('checklist');
+  const [noteInputs, setNoteInputs] = useState({});
+  const [showNoteInput, setShowNoteInput] = useState({});
 
   const handleLogout = () => {
     // Implement logout logic here
     console.log('Logout clicked');
   };
 
-  // Mock data for therapy preparation - would be fetched from backend
-  const therapyDetails = {
-    type: "Virechana PanchKarma Therapy",
-    appointmentDate: "Tomorrow, 10:00 AM",
-    timeRemaining: 18.5 // hours
-  };
 
-  // Initialize checklist items as state
+  // Initialize checklist items as state - would be fetched from backend
   const [checklistItems, setChecklistItems] = useState([
     {
       id: 1,
-      title: "Complete Pre-PanchKarma Assessment",
-      description: "Gather all medical documents and complete PanchKarma readiness assessment",
+      title: "Pre-Therapy Assessment",
+      description: "Complete necessary health assessments and documentation",
       icon: "📋",
       priority: "high",
       completed: false,
       timing: "Before appointment",
       detailedInstructions: [
-        "Complete the Prakriti (body constitution) assessment form",
-        "List all current medications, herbs, and supplements",
-        "Document any allergies, especially to oils and herbs",
-        "Note your digestive patterns and recent health issues",
-        "Prepare questions about the specific PanchKarma therapy"
+        "Fill out the health assessment form",
+        "List all current medications and supplements",
+        "Document any allergies or health conditions",
+        "Review your health history",
+        "Prepare questions for your specialist"
       ],
       notes: []
     },
     {
       id: 2,
-      title: "Dietary Preparation (Deepana & Pachana)",
-      description: "Begin the pre-therapy dietary regimen as prescribed",
-      icon: "💳",
+      title: "Dietary Guidelines",
+      description: "Follow recommended dietary preparations",
+      icon: "🍃",
       priority: "high",
-      completed: true,
-      timing: "Before leaving home",
+      completed: false,
+      timing: "As advised",
       detailedInstructions: [
-        "Follow the prescribed light diet (laghu ahara)",
-        "Take prescribed digestive medicines (deepana pachana)",
-        "Avoid heavy, oily, and spicy foods",
-        "Drink warm water and herbal teas only",
-        "Fast as instructed before the therapy day"
+        "Follow the prescribed diet plan",
+        "Take any recommended supplements",
+        "Avoid specified foods and beverages",
+        "Stay properly hydrated",
+        "Follow fasting instructions if provided"
       ],
-      notes: ["Started light diet 3 days ago"]
+      notes: []
     },
     {
       id: 3,
-      title: "Snehana (Oil Preparation)",
-      description: "Complete the internal and external oil application as prescribed",
-      icon: "⏰",
+      title: "Preparation Steps",
+      description: "Complete necessary preparation procedures",
+      icon: "⚡",
       priority: "medium",
       completed: false,
-      timing: "Day of appointment",
+      timing: "As scheduled",
       detailedInstructions: [
-        "Take prescribed ghee or medicated oils internally",
-        "Apply prescribed oils externally for abhyanga",
-        "Follow the increasing dosage schedule",
-        "Monitor your body's response to oleation",
-        "Report any discomfort to your practitioner"
+        "Follow any pre-treatment instructions",
+        "Apply recommended preparations",
+        "Follow the provided schedule",
+        "Monitor your body's response",
+        "Contact support if you have concerns"
       ],
       notes: []
     },
     {
       id: 4,
-      title: "Swedana (Steam Therapy) Preparation",
-      description: "Prepare for the pre-therapy steam and heat treatments",
-      icon: "📝",
+      title: "Final Preparations",
+      description: "Complete final steps before your appointment",
+      icon: "✨",
       priority: "medium",
       completed: false,
-      timing: "As instructed",
+      timing: "Day of appointment",
       detailedInstructions: [
-        "Stay hydrated but avoid excessive water intake",
-        "Wear loose, comfortable cotton clothing",
-        "Bring towels and change of clothes",
-        "Avoid air conditioning and cold environments",
-        "Rest well and avoid physical exertion"
+        "Get adequate rest",
+        "Wear comfortable clothing",
+        "Bring necessary items",
+        "Arrive on time",
+        "Relax and prepare mentally"
       ],
       notes: []
     }
   ]);
 
   const emergencyContact = {
-    name: "Dr. Rajesh Sharma",
-    designation: "Chief PanchKarma Specialist",
-    phone: "+1 (555) 123-4567",
-    email: "support@panchkarmawellness.com",
+    name: "Dr. Support Team",
+    designation: "Ayursutra Specialist",
+    phone: "+1 (555) 000-0000",
+    email: "support@ayursutra.com",
     available: "24/7"
   };
 
@@ -112,8 +108,9 @@ const TherapyPreparation = () => {
     console.log(`Item ${itemId} marked as ${completed ? 'completed' : 'incomplete'}`);
   };
 
-  const handleAddNote = (itemId, note) => {
-    if (note.trim()) {
+  const handleAddNote = (itemId) => {
+    const note = noteInputs[itemId];
+    if (note && note.trim()) {
       setChecklistItems(prevItems => 
         prevItems.map(item => 
           item.id === itemId 
@@ -121,8 +118,18 @@ const TherapyPreparation = () => {
             : item
         )
       );
+      setNoteInputs(prev => ({ ...prev, [itemId]: '' }));
+      setShowNoteInput(prev => ({ ...prev, [itemId]: false }));
     }
     console.log(`Note added to item ${itemId}: ${note}`);
+  };
+  
+  const handleNoteInputChange = (itemId, value) => {
+    setNoteInputs(prev => ({ ...prev, [itemId]: value }));
+  };
+  
+  const toggleNoteInput = (itemId) => {
+    setShowNoteInput(prev => ({ ...prev, [itemId]: !prev[itemId] }));
   };
 
   const handleContactSupport = () => {
@@ -137,24 +144,10 @@ const TherapyPreparation = () => {
 
   const PreparationHeader = () => (
     <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-6 mb-8">
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-            PanchKarma Therapy Preparation
-          </h1>
-          <p className="text-lg text-text-secondary mb-1">
-            {therapyDetails.type}
-          </p>
-          <p className="text-sm text-text-secondary">
-            Scheduled for: {therapyDetails.appointmentDate}
-          </p>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-primary">
-            {Math.floor(therapyDetails.timeRemaining)}h {Math.round((therapyDetails.timeRemaining % 1) * 60)}m
-          </div>
-          <div className="text-sm text-text-secondary">Time remaining</div>
-        </div>
+      <div className="text-center">
+        <h1 className="text-3xl font-heading font-bold text-foreground">
+          Ayursutra Therapy Preparation
+        </h1>
       </div>
     </div>
   );
@@ -196,7 +189,23 @@ const TherapyPreparation = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex items-center gap-3">
+              {/* Display existing notes */}
+              {item.notes.length > 0 && (
+                <div className="bg-primary/5 rounded-lg p-3 mb-4">
+                  <h5 className="font-semibold text-foreground text-sm mb-2">My Notes:</h5>
+                  <ul className="space-y-1">
+                    {item.notes.map((note, index) => (
+                      <li key={index} className="text-sm text-text-secondary flex items-start gap-2">
+                        <span className="text-primary mt-1">📝</span>
+                        <span>{note}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {/* Action buttons */}
+              <div className="flex flex-wrap items-center gap-3">
                 <Button
                   variant={item.completed ? "default" : "outline"}
                   size="sm"
@@ -204,10 +213,52 @@ const TherapyPreparation = () => {
                 >
                   {item.completed ? '✅ Completed' : 'Mark Complete'}
                 </Button>
+                
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => toggleNoteInput(item.id)}
+                >
+                  {showNoteInput[item.id] ? '❌ Cancel' : '📝 Add Note'}
+                </Button>
+                
                 {item.notes.length > 0 && (
-                  <span className="text-sm text-success">Notes added</span>
+                  <span className="text-sm text-success flex items-center gap-1">
+                    <span>📝</span>
+                    {item.notes.length} note{item.notes.length !== 1 ? 's' : ''}
+                  </span>
                 )}
               </div>
+              
+              {/* Note input form */}
+              {showNoteInput[item.id] && (
+                <div className="mt-4 p-4 bg-muted rounded-lg">
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Add a personal note or reminder:
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={noteInputs[item.id] || ''}
+                      onChange={(e) => handleNoteInputChange(item.id, e.target.value)}
+                      placeholder="Enter your note here..."
+                      className="flex-1 px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          handleAddNote(item.id);
+                        }
+                      }}
+                    />
+                    <Button
+                      size="sm"
+                      onClick={() => handleAddNote(item.id)}
+                      disabled={!noteInputs[item.id]?.trim()}
+                    >
+                      Add
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -439,14 +490,14 @@ const TherapyPreparation = () => {
                 </div>
               </div>
 
-              {/* Appointment Reminder */}
+              {/* Contact Support */}
               <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
                 <div className="flex items-center space-x-3 mb-3">
-                  <span className="text-xl">⏰</span>
-                  <h3 className="font-semibold text-foreground">Appointment Reminder</h3>
+                  <span className="text-xl">📞</span>
+                  <h3 className="font-semibold text-foreground">Need Help?</h3>
                 </div>
                 <p className="text-sm text-text-secondary mb-3">
-                  Your appointment is in {Math.floor(therapyDetails.timeRemaining)} hours and {Math.round((therapyDetails.timeRemaining % 1) * 60)} minutes.
+                  Have questions about your therapy preparation? Contact our support team.
                 </p>
                 <Button
                   variant="outline"
@@ -454,7 +505,7 @@ const TherapyPreparation = () => {
                   className="w-full"
                   onClick={() => setActiveTab('contact')}
                 >
-                  Need to Reschedule?
+                  Contact Support
                 </Button>
               </div>
             </div>

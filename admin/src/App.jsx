@@ -4,7 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AdminContext } from "./context/AdminContext";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Admin/Dashboard";
 import AllAppointments from "./pages/Admin/AllAppointments";
@@ -20,11 +19,12 @@ const App = () => {
   const { dToken } = useContext(DoctorContext);
 
   return aToken || dToken ? (
-    <div className="bg-gradient-to-br from-background via-muted to-card min-h-screen">
+    <div className="min-h-screen bg-background">
       <ToastContainer />
       <Navbar />
-      <div className="flex items-start">
-        <Sidebar />
+      
+      {/* Main content with top padding for fixed header */}
+      <main className="pt-16">
         <Routes>
           {/* Admin Route */}
           <Route path="/" element={<></>} />
@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/doctor-appointments" element={<DoctorAppointments />} />
           <Route path="/doctor-profile" element={<DoctorProfile />} />
         </Routes>
-      </div>
+      </main>
     </div>
   ) : (
     <>

@@ -47,14 +47,18 @@ const Home = () => {
               </div>
               
               <Button
-                variant="secondary"
-                size="lg"
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-elevated hover-lift"
-                iconName="Calendar"
-                iconPosition="right"
-              >
-                Start PanchKarma Journey
-              </Button>
+                  variant="secondary"
+                  size="lg"
+                  className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-elevated hover-lift"
+                  iconName="Calendar"
+                  iconPosition="right"
+                  onClick={() => {
+                    const section = document.getElementById("speciality");
+                    section?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  Start PanchKarma Journey
+                </Button>
             </div>
 
             {/* Right Side - Image */}

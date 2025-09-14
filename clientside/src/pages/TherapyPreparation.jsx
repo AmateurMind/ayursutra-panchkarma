@@ -21,7 +21,8 @@ const TherapyPreparation = () => {
     timeRemaining: 18.5 // hours
   };
 
-  const checklistItems = [
+  // Initialize checklist items as state
+  const [checklistItems, setChecklistItems] = useState([
     {
       id: 1,
       title: "Complete Pre-PanchKarma Assessment",
@@ -90,7 +91,7 @@ const TherapyPreparation = () => {
       ],
       notes: []
     }
-  ];
+  ]);
 
   const emergencyContact = {
     name: "Dr. Rajesh Sharma",
@@ -101,10 +102,26 @@ const TherapyPreparation = () => {
   };
 
   const handleItemComplete = (itemId, completed) => {
+    setChecklistItems(prevItems => 
+      prevItems.map(item => 
+        item.id === itemId 
+          ? { ...item, completed: completed }
+          : item
+      )
+    );
     console.log(`Item ${itemId} marked as ${completed ? 'completed' : 'incomplete'}`);
   };
 
   const handleAddNote = (itemId, note) => {
+    if (note.trim()) {
+      setChecklistItems(prevItems => 
+        prevItems.map(item => 
+          item.id === itemId 
+            ? { ...item, notes: [...item.notes, note.trim()] }
+            : item
+        )
+      );
+    }
     console.log(`Note added to item ${itemId}: ${note}`);
   };
 

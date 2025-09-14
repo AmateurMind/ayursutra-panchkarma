@@ -65,8 +65,8 @@ const Contact = () => {
                     <div>
                       <div className="font-medium text-foreground">Address</div>
                       <div className="text-text-secondary">
-                        54709 Willms Station<br />
-                        Suite 350, Washington, USA
+                        PES Modern College<br />
+                        Shiavji Nagar, Pune, Maharashtra<br />
                       </div>
                     </div>
                   </div>
@@ -76,7 +76,7 @@ const Contact = () => {
                       <div className="font-medium text-foreground">Phone</div>
                       <div className="text-text-secondary">
                         <a href="tel:+14155550132" className="hover:text-primary transition-colors">
-                          (415) 555-0132
+                          1234567890
                         </a>
                       </div>
                     </div>
@@ -87,7 +87,7 @@ const Contact = () => {
                       <div className="font-medium text-foreground">Email</div>
                       <div className="text-text-secondary">
                         <a href="mailto:support@karmpanchawellness.com" className="hover:text-primary transition-colors">
-                          support@panchkarmawellness.com
+                          suhail17mohammad@gmail.com
                         </a>
                       </div>
                     </div>

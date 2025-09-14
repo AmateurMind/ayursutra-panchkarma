@@ -4,7 +4,7 @@ import Button from './Button';
 const ContactForm = ({ 
   title = "Contact Us", 
   description = "Get in touch with our PanchKarma wellness team",
-  accessKey = "YOUR_WEB3FORMS_ACCESS_KEY",
+  accessKey ="77c9f68f-35c2-4a19-ae00-9e87cc827679",
   onSuccess,
   onError 
 }) => {
@@ -236,14 +236,14 @@ const ContactForm = ({
             <span className="text-primary">📞</span>
             <div>
               <div className="font-medium text-foreground">Phone</div>
-              <div className="text-text-secondary">+1 (555) 123-4567</div>
+              <div className="text-text-secondary">1234567890</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-primary">📧</span>
             <div>
               <div className="font-medium text-foreground">Email</div>
-              <div className="text-text-secondary">support@panchkarmawellness.com</div>
+              <div className="text-text-secondary">ayur@gmail.com</div>
             </div>
           </div>
           <div className="flex items-center gap-2">

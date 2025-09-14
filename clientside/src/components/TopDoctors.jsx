@@ -47,7 +47,7 @@ const TopDoctors = () => {
           navigate("/doctors");
           scrollTo(0, 0);
         }}
-        className="bg-primary bg-opacity-10 text-gray-600 px-12 py-3 rounded-full mt-10 hover:bg-primary hover:text-white transition-all duration-300"
+        className="bg-primary bg-opacity-10 text-[#CCCCCC] px-12 py-3 rounded-full mt-10 hover:bg-primary hover:text-white transition-all duration-300"
       >
         View All Specialists
       </button>

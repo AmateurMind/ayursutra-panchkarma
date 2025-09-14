@@ -272,7 +272,7 @@ const Appointment = () => {
                   <div className="flex items-center justify-between p-4 bg-primary/5 rounded-lg border border-primary/20">
                     <span className="font-body text-text-secondary">Consultation Fee</span>
                     <span className="font-heading text-2xl font-bold text-foreground">
-                      {currencySymbol}{docInfo.fees}
+                      Rs.{docInfo.fees}
                     </span>
                   </div>
                 </div>

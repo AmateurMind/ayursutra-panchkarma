@@ -92,7 +92,7 @@ const TherapyPreparation = () => {
   const emergencyContact = {
     name: "Dr. Support Team",
     designation: "Ayursutra Specialist",
-    phone: "+1 (555) 000-0000",
+    phone: "1234567890",
     email: "support@ayursutra.com",
     available: "24/7"
   };
@@ -353,16 +353,24 @@ const TherapyPreparation = () => {
             📞 Call {emergencyContact.phone}
           </Button>
           <Button
-            variant="outline"
-            onClick={() =>
-              window.open(
-                `mailto:${emergencyContact.email}?subject=Appointment Inquiry&body=Hello, I have a question about my upcoming appointment.`,
-                "_blank"
-              )
-            }
-          >
-            📧 Email Support
-          </Button>
+  variant="outline"
+  onClick={() => {
+    if (!emergencyContact?.email) return;
+
+    const email = emergencyContact.email;
+    const subject = encodeURIComponent("Appointment Inquiry");
+    const body = encodeURIComponent(
+      "Hello, I have a question about my upcoming appointment."
+    );
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+
+    window.open(gmailUrl, "_blank");
+  }}
+>
+  📧 Email Support
+</Button>
+
         </div>
         
         <div className="mt-6 p-4 bg-warning/5 rounded-lg border border-warning/20">

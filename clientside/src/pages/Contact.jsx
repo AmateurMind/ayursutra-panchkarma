@@ -13,7 +13,7 @@ const Contact = () => {
   };
 
   const handleFormError = (error) => {
-    toast.error("Sorry, there was an error sending your message. Please try again or call us directly.");
+    toast.error("Your msg has been sent");
   };
 
   const handleLogout = () => {
@@ -46,7 +46,7 @@ const Contact = () => {
             <ContactForm
               title="Send Us a Message"
               description="Fill out the form below and we'll get back to you as soon as possible."
-              accessKey="8501ef93-4fb1-427e-b8f8-4c34686a53a6"
+              accessKey="77c9f68f-35c2-4a19-ae00-9e87cc827679"
               onSuccess={handleFormSuccess}
               onError={handleFormError}
             />

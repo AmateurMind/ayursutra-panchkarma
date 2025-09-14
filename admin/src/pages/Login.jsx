@@ -52,7 +52,7 @@ const Login = () => {
           <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-breathing">
             <span className="text-white text-2xl font-bold">🌿</span>
           </div>
-          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">PanchKarma Wellness</h1>
+          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Ayursutra</h1>
           <p className="text-text-secondary font-body">Admin Portal Access</p>
         </div>
         
@@ -128,7 +128,7 @@ const Login = () => {
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-text-secondary font-body text-xs">
-            Authentic PanchKarma Wellness Management System
+            Ayursutra Management System
           </p>
         </div>
       </div>

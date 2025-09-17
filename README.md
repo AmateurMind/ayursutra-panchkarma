@@ -31,55 +31,6 @@ AYURSUTRA consists of three main applications:
 - Cloudinary account
 - Razorpay account (for payments)
 
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/AmateurMind/SIH-2K25.git
-cd SIH-2K25
-```
-
-2. **Backend Setup**
-```bash
-cd backend
-npm install
-```
-
-Create `.env` file:
-```env
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_SECRET_KEY=your_cloudinary_secret_key
-RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_SECRET_KEY=your_razorpay_secret_key
-PORT=4000
-```
-
-3. **Patient Frontend Setup**
-```bash
-cd ../clientside
-npm install
-```
-
-Create `.env` file:
-```env
-VITE_BACKEND_URL=http://localhost:4000
-VITE_RAZOR_PAY_KEY_ID=your_razorpay_key_id
-```
-
-4. **Admin Panel Setup**
-```bash
-cd ../admin
-npm install
-```
-
-Create `.env` file:
-```env
-VITE_BACKEND_URL=http://localhost:4000
-```
-
 ### Running the Application
 
 1. **Start Backend Server**
@@ -210,3 +161,4 @@ Ensure all environment variables are configured in your hosting platform's dashb
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+See ya!

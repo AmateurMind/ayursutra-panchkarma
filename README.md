@@ -1,7 +1,7 @@
-
+LIVE DEMO:
+https://ayursutra-clientside.onrender.com/
 ```markdown
 # 🌿 AYURSUTRA - Ayurvedic Appointment Booking System
-Live demo:https://ayursutra-clientside.onrender.com/
 A comprehensive digital platform connecting wellness seekers with Ayurvedic specialists, featuring appointment booking, profile management, and administrative tools.
 
 ## 🏗️ System Architecture

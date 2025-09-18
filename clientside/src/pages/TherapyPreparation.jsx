@@ -105,13 +105,13 @@ const TherapyPreparation = () => {
   const instructionalVideos = [
     {
       id: 1,
-      title: "Pre-Abhyanga Preparation Guide",
-      description: "Complete guide to preparing for your oil massage therapy",
-      thumbnail: "https://images.pexels.com/photos/6801176/pexels-photo-6801176.jpeg",
-      duration: "12:14",
-      instructor: "S.G.T University",
+      title: "Panchkarma Full Explanation and Demonsration Guide",
+      description: "A complete walkthrough of Panchakarma therapy, with clear explanations and practical demonstrations tailored for you.",
+      thumbnail: "https://images.pexels.com/photos/7988011/pexels-photo-7988011.jpeg",
+      duration: "39:48",
+      instructor: "Paramanand Ayurveda",
       //rating: "4.9",
-      videoUrl: "https://www.youtube.com/watch?v=JWxFlKkSq54"
+      videoUrl: "https://www.youtube.com/watch?v=EQRuIgsfqp4"
     },
     {
       id: 2,

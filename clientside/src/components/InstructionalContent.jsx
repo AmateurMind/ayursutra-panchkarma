@@ -71,7 +71,7 @@ const InstructionalContent = ({ videos = [], tips = [], emergencyContact = null 
             variant={activeSection === 'videos' ? 'default' : 'outline'}
             size="sm"
             onClick={() => setActiveSection('videos')}
-            iconName="Play"
+            iconName="Video"
             iconSize={14}
           >
             Videos
@@ -100,7 +100,7 @@ const InstructionalContent = ({ videos = [], tips = [], emergencyContact = null 
             {videos.map((video) => (
               <div key={video.id} className="bg-card rounded-lg shadow-breathing overflow-hidden hover:shadow-lg transition-all duration-300">
                 {/* Video Thumbnail */}
-                <div className="relative aspect-video bg-muted group cursor-pointer" onClick={() => handleVideoPlay(video)}>
+                <div className="relative w-full h-48 bg-muted group cursor-pointer" onClick={() => handleVideoPlay(video)}>
                   {video.thumbnail ? (
                     <img
                       src={video.thumbnail}
@@ -117,7 +117,7 @@ const InstructionalContent = ({ videos = [], tips = [], emergencyContact = null 
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="bg-white/90 rounded-full p-3 transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                      <Icon name="Play" size={24} className="text-primary ml-1" />
+                      <Icon name="Video" size={24} className="text-primary ml-1" />
                     </div>
                   </div>
                   
@@ -179,7 +179,7 @@ const InstructionalContent = ({ videos = [], tips = [], emergencyContact = null 
                       variant="default"
                       size="sm"
                       onClick={() => handleVideoPlay(video)}
-                      iconName="Play"
+                      iconName="Video"
                       iconSize={14}
                     >
                       Watch Video

@@ -107,7 +107,7 @@ const TherapyPreparation = () => {
       id: 1,
       title: "Pre-Abhyanga Preparation Guide",
       description: "Complete guide to preparing for your oil massage therapy",
-      thumbnail: "https://images.pexels.com/photos/7234622/pexels-photo-7234622.jpeg",
+      thumbnail: "https://images.pexels.com/photos/6801176/pexels-photo-6801176.jpeg",
       duration: "12:14",
       instructor: "S.G.T University",
       //rating: "4.9",

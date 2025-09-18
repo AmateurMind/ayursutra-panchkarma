@@ -300,7 +300,7 @@ const AutoLaunchChatbot = () => {
     >
       <button
         onClick={toggleChatbot}
-        className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-4 shadow-elevated hover-lift transition-all duration-300 group"
+        className="bg-[#8B4513] hover:bg-[#733a10] text-white rounded-full p-4 shadow-elevated hover-lift transition-all duration-300 group relative"
         aria-label="Open chatbot"
       >
         <img

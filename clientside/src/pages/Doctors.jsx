@@ -11,11 +11,13 @@ const Doctors = () => {
 
   const navigate = useNavigate();
 
-  const { doctors, token } = useContext(AppContext);
+  const { doctors, token, userData, setUserData, setToken } = useContext(AppContext);
   
   const handleLogout = () => {
-    // Implement logout logic here
-    console.log('Logout clicked');
+    localStorage.removeItem('token');
+    setUserData(false);
+    setToken('');
+    navigate('/');
   };
 
   const applyFilter = () => {
@@ -35,7 +37,7 @@ const Doctors = () => {
       <ModernHeader
         userRole="patient"
         isAuthenticated={!!token}
-        userName="User" 
+        userName={userData?.name || "User"} 
         onLogout={handleLogout}
       />
       

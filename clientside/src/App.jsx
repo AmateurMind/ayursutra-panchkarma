@@ -10,6 +10,7 @@ import MyAppointments from "./pages/MyAppointments";
 import Appointment from "./pages/Appointment";
 import TherapyPreparation from "./pages/TherapyPreparation";
 import Footer from "./components/Footer";
+import AutoLaunchChatbot from "./components/ui/AutoLaunchChatbot";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,6 +31,8 @@ const App = () => {
         <Route path="/therapy-preparation" element={<TherapyPreparation />} />
       </Routes>
       <Footer />
+      {/* Global Auto-Launching Chatbot */}
+      <AutoLaunchChatbot />
     </div>
   );
 };

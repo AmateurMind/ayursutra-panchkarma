@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ModernHeader from '../components/ui/Header'
 import Button from '../components/ui/Button'
 import SpecialityMenu from '../components/SpecialityMenu'
@@ -8,11 +9,14 @@ import { AppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
 
 const Home = () => {
-  const { token } = useContext(AppContext);
+  const { token, userData, setUserData, setToken } = useContext(AppContext);
+  const navigate = useNavigate();
   
   const handleLogout = () => {
-    // Implement logout logic here
-    console.log('Logout clicked');
+    localStorage.removeItem('token');
+    setUserData(false);
+    setToken('');
+    navigate('/');
   };
 
   return (
@@ -20,7 +24,7 @@ const Home = () => {
       <ModernHeader
         userRole="patient"
         isAuthenticated={!!token}
-        userName="User" 
+        userName={userData?.name || "User"} 
         onLogout={handleLogout}
       />
       

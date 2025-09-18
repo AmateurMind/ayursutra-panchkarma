@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import Header from '../components/ui/Header';
 import Button from '../components/ui/Button';
+import PreparationVideo from '../components/PreparationVideo';
+import InstructionalContent from '../components/InstructionalContent';
 
 const TherapyPreparation = () => {
   const navigate = useNavigate();
   const { token, userData, setUserData, setToken } = useContext(AppContext);
-  const [activeTab, setActiveTab] = useState('checklist');
+  const [activeTab, setActiveTab] = useState('video');
   const [noteInputs, setNoteInputs] = useState({});
   const [showNoteInput, setShowNoteInput] = useState({});
 
@@ -99,6 +101,80 @@ const TherapyPreparation = () => {
     available: "24/7"
   };
 
+  // Instructional videos for preparation (YouTube links)
+  const instructionalVideos = [
+    {
+      id: 1,
+      title: "Pre-Abhyanga Preparation Guide",
+      description: "Complete guide to preparing for your oil massage therapy",
+      thumbnail: "https://images.pexels.com/photos/7234622/pexels-photo-7234622.jpeg",
+      duration: "12:14",
+      instructor: "S.G.T University",
+      //rating: "4.9",
+      videoUrl: "https://www.youtube.com/watch?v=JWxFlKkSq54"
+    },
+    {
+      id: 2,
+      title: "Breathing Techniques for Therapy",
+      description: "Learn Pranayama techniques to enhance therapy benefits",
+      thumbnail: "https://images.pexels.com/photos/33949611/pexels-photo-33949611.jpeg",
+      duration: "3:00",
+      instructor: "Drs. Neda Gould",
+      //rating: "4.8",
+      videoUrl: "https://www.youtube.com/watch?v=Wemm-i6XHr8"
+    },
+    {
+      id: 3,
+      title: "Post-Therapy Care Instructions",
+      description: "Essential care tips for after your Abhyanga session",
+      thumbnail: "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg",
+      duration: "9:25",
+      instructor: "The Professional Massage Academy",
+      //rating: "4.7",
+      videoUrl: "https://www.youtube.com/watch?v=RCxp0MLzRYw"
+    }
+  ];
+
+  // Expert tips data
+  const expertTips = [
+    {
+      id: 1,
+      title: "Optimal Oil Temperature",
+      category: "Preparation Technique",
+      icon: "Thermometer",
+      content: `The oil used in Abhyanga should be slightly warm, not hot. Test the temperature on your wrist before application. Warm oil penetrates deeper into tissues and provides better therapeutic benefits. If the oil is too hot, it can cause burns; if too cold, it won't absorb properly.`,
+      author: "Rajesh Vaidya",
+      experience: 25
+    },
+    {
+      id: 2,
+      title: "Mind-Body Connection",
+      category: "Mental Preparation",
+      icon: "Heart",
+      content: `Abhyanga is not just a physical therapy but a spiritual practice. Approach it with reverence and positive intention. Visualize the healing energy flowing through your body. This mental preparation enhances the therapeutic effects significantly.`,
+      author: "Meera Sharma",
+      experience: 18
+    },
+    {
+      id: 3,
+      title: "Seasonal Considerations",
+      category: "Timing & Environment",
+      icon: "Sun",
+      content: `The best time for Abhyanga varies by season. In winter, morning sessions are ideal as they warm the body. In summer, early morning or evening sessions prevent overheating. Always ensure the room is warm and draft-free.`,
+      author: "Amit Kumar",
+      experience: 22
+    },
+    {
+      id: 4,
+      title: "Post-Therapy Rest",
+      category: "Recovery Protocol",
+      icon: "Bed",
+      content: `After Abhyanga, rest for at least 30 minutes before bathing. This allows the oil to penetrate deeply and the body to integrate the therapy. Avoid strenuous activities for the rest of the day to maximize benefits.`,
+      author: "Sunita Devi",
+      experience: 30
+    }
+  ];
+
   const handleItemComplete = (itemId, completed) => {
     setChecklistItems(prevItems => 
       prevItems.map(item => 
@@ -141,6 +217,7 @@ const TherapyPreparation = () => {
   const tabs = [
     { id: 'checklist', label: 'Preparation Checklist', icon: '✅' },
     { id: 'instructions', label: 'Instructions', icon: '📚' },
+    { id: 'video', label: 'Preparation Video', icon: '📷' },
     { id: 'contact', label: 'Contact Support', icon: '📞' }
   ];
 
@@ -432,6 +509,7 @@ const TherapyPreparation = () => {
             <div className="lg:col-span-2">
               {activeTab === 'checklist' && <ChecklistSection />}
               {activeTab === 'instructions' && <InstructionsSection />}
+              {activeTab === 'video' && <InstructionalContent videos={instructionalVideos} tips={expertTips} emergencyContact={emergencyContact} />}
               {activeTab === 'contact' && <ContactSection />}
             </div>
 

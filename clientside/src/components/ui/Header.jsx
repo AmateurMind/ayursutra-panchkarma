@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../AppIcon';
 import Button from './Button';
-import ChatbotPanel from './ChatbotPanel';
 
 const Header = ({ 
   userRole = null, 
@@ -11,246 +10,18 @@ const Header = ({
   onLogout = () => {} 
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
-  const [chatbotPosition, setChatbotPosition] = useState({ x: 20, y: 100 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hello! I'm your PanchKarma Wellness Assistant. How can I help you with your Panchkarma treatments and wellness journey today?",
-      sender: 'bot',
-      timestamp: new Date()
-    }
-  ]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const chatbotRef = useRef(null);
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  // Focus input when chatbot opens
-  useEffect(() => {
-    if (isChatbotOpen && inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
-  }, [isChatbotOpen]);
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location?.pathname]);
 
-  // Handle dragging with boundary constraints
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (isDragging && chatbotRef.current) {
-        const newX = e.clientX - dragOffset.x;
-        const newY = e.clientY - dragOffset.y;
-
-        const chatbotRect = chatbotRef.current.getBoundingClientRect();
-        const maxX = window.innerWidth - chatbotRect.width;
-        const maxY = window.innerHeight - chatbotRect.height;
-
-        const constrainedX = Math.max(0, Math.min(maxX, newX));
-        const constrainedY = Math.max(0, Math.min(maxY, newY));
-
-        setChatbotPosition({
-          x: constrainedX,
-          y: constrainedY
-        });
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.userSelect = 'none';
-    } else {
-      document.body.style.userSelect = '';
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.body.style.userSelect = '';
-    };
-  }, [isDragging, dragOffset]);
-
   const handleNavigation = (path) => {
     navigate(path);
     setIsMobileMenuOpen(false);
   };
-
-  const toggleChatbot = () => {
-    setIsChatbotOpen(!isChatbotOpen);
-    if (!isChatbotOpen) {
-      setMessages([
-        {
-          id: 1,
-          text: "Hello! I'm your Ayursutra Assistant. How can I help you with your Panchkarma treatments and wellness journey today?",
-          sender: 'bot',
-          timestamp: new Date()
-        }
-      ]);
-      setInputMessage('');
-    }
-  };
-
-  const handleDragStart = (e) => {
-    const target = e.target;
-    const isInteractiveElement = target.closest('input, button, .chatbot-input-area, .chatbot-messages');
-
-    if (isInteractiveElement || e.target.closest('.chatbot-close-btn')) {
-      return;
-    }
-
-    if (e.button !== 0) return;
-
-    const rect = chatbotRef.current.getBoundingClientRect();
-    setDragOffset({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    });
-    setIsDragging(true);
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const sendMessageToGemini = async (message) => {
-    const API_KEY = "AIzaSyBQ1qqJICZ4lBpKsZmBc_NUr6STO-Gsklg";
-    const MODEL_NAME = "gemini-2.0-flash";
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are Ayursutra Assistant, a helpful and knowledgeable chatbot for a Panchkarma wellness and therapy platform.
-              You should provide helpful, accurate information about:
-              - Panchkarma treatments and their benefits (Vamana, Virechana, Basti, Nasya, Raktamokshana)
-              - Booking appointments with certified Panchkarma specialists and therapists
-              - Pre and post-treatment care and preparation for Panchkarma therapies
-              - Ayurvedic lifestyle guidance and wellness practices
-              - Specific conditions treated through Panchkarma detoxification
-              - Platform navigation and appointment management
-              
-              Keep responses concise but informative. Be friendly and professional. Focus on Panchkarma therapies, Ayurvedic wellness, and holistic detoxification.
-              
-              User message: ${message}`
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          }
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.candidates &&
-        data.candidates[0] &&
-        data.candidates[0].content &&
-        data.candidates[0].content.parts &&
-        data.candidates[0].content.parts[0]) {
-        return data.candidates[0].content.parts[0].text;
-      } else {
-        throw new Error('Invalid response structure from Gemini API');
-      }
-    } catch (error) {
-      console.error('Error calling Gemini API:', error);
-
-      if (error.message.includes('403')) {
-        return "I'm sorry, there seems to be an authentication issue. Please check the API configuration.";
-      } else if (error.message.includes('429')) {
-        return "I'm receiving too many requests right now. Please wait a moment and try again.";
-      } else {
-        return "I'm sorry, I'm having trouble connecting to the server. Please try again later.";
-      }
-    }
-  };
-
-  const handleSendMessage = useCallback(async () => {
-    const trimmedMessage = inputMessage.trim();
-    if (!trimmedMessage || isLoading) return;
-
-    const userMessage = {
-      id: Date.now(),
-      text: trimmedMessage,
-      sender: 'user',
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
-    setIsLoading(true);
-
-    try {
-      const botResponse = await sendMessageToGemini(trimmedMessage);
-
-      const botMessage = {
-        id: Date.now() + 1,
-        text: botResponse,
-        sender: 'bot',
-        timestamp: new Date()
-      };
-
-      setMessages(prev => [...prev, botMessage]);
-    } catch (error) {
-      console.error('Error in handleSendMessage:', error);
-      const errorMessage = {
-        id: Date.now() + 1,
-        text: "Sorry, I'm having trouble responding right now. Please try again.",
-        sender: 'bot',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => {
-        if (inputRef.current && isChatbotOpen) {
-          inputRef.current.focus();
-        }
-      }, 100);
-    }
-  }, [inputMessage, isLoading, isChatbotOpen]);
-
-  const handleKeyPress = useCallback((e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  }, [handleSendMessage]);
-
-  const handleInputChange = useCallback((e) => {
-    setInputMessage(e.target.value);
-  }, []);
 
   const getPatientNavItems = () => [
     {
@@ -381,36 +152,11 @@ const Header = ({
     )
   );
 
-  const ChatbotIcon = () => (
-    <button
-      onClick={toggleChatbot}
-      className="relative flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-foreground hover:bg-muted transition-breathing touch-target focus-ring"
-      aria-label={isChatbotOpen ? "Close chatbot" : "Open chatbot"}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 64 64"
-        className="w-6 h-6"
-      >
-        <rect x="14" y="20" width="36" height="30" rx="4" ry="4" />
-        <circle cx="22" cy="30" r="3" fill="white" />
-        <circle cx="42" cy="30" r="3" fill="white" />
-        <rect x="26" y="38" width="12" height="2" fill="white" />
-        <rect x="30" y="50" width="4" height="4" fill="currentColor" />
-        <rect x="10" y="10" width="44" height="8" rx="2" ry="2" />
-      </svg>
-      {isChatbotOpen && (
-        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-      )}
-    </button>
-  );
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo and Chatbot Icon */}
+          {/* Logo */}
           <div className="flex-shrink-0 flex items-center space-x-4">
             <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleNavigation('/')}>
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
@@ -427,8 +173,6 @@ const Header = ({
                 Ayursutra
               </div>
             </div>
-            {/* Chatbot icon next to logo */}
-            <ChatbotIcon />
           </div>
 
           {/* Desktop Navigation */}
@@ -509,23 +253,6 @@ const Header = ({
           </div>
         )}
       </div>
-
-      {/* Floating Chatbot Panel */}
-      <ChatbotPanel
-        ref={chatbotRef}
-        isChatbotOpen={isChatbotOpen}
-        chatbotPosition={chatbotPosition}
-        handleDragStart={handleDragStart}
-        toggleChatbot={toggleChatbot}
-        messages={messages}
-        messagesEndRef={messagesEndRef}
-        inputRef={inputRef}
-        inputMessage={inputMessage}
-        handleInputChange={handleInputChange}
-        handleKeyPress={handleKeyPress}
-        handleSendMessage={handleSendMessage}
-        isLoading={isLoading}
-      />
     </header>
   );
 };

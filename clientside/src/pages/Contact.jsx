@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
 import Header from "../components/ui/Header";
@@ -6,7 +7,8 @@ import ContactForm from "../components/ui/ContactForm";
 import { toast } from "react-toastify";
 
 const Contact = () => {
-  const { token } = useContext(AppContext);
+  const { token, userData, setUserData, setToken } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const handleFormSuccess = (result) => {
     toast.success("Thank you! Your message has been sent successfully. We'll get back to you soon.");
@@ -17,7 +19,10 @@ const Contact = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logout clicked');
+    localStorage.removeItem('token');
+    setUserData(false);
+    setToken('');
+    navigate('/');
   };
 
   return (
@@ -25,7 +30,7 @@ const Contact = () => {
       <Header
         userRole="patient"
         isAuthenticated={!!token}
-        userName="User"
+        userName={userData?.name || "User"}
         onLogout={handleLogout}
       />
       

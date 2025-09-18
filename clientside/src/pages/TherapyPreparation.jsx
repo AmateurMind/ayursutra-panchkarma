@@ -6,14 +6,16 @@ import Button from '../components/ui/Button';
 
 const TherapyPreparation = () => {
   const navigate = useNavigate();
-  const { token } = useContext(AppContext);
+  const { token, userData, setUserData, setToken } = useContext(AppContext);
   const [activeTab, setActiveTab] = useState('checklist');
   const [noteInputs, setNoteInputs] = useState({});
   const [showNoteInput, setShowNoteInput] = useState({});
 
   const handleLogout = () => {
-    // Implement logout logic here
-    console.log('Logout clicked');
+    localStorage.removeItem('token');
+    setUserData(false);
+    setToken('');
+    navigate('/');
   };
 
 
@@ -394,7 +396,7 @@ const TherapyPreparation = () => {
       <Header
         userRole="patient"
         isAuthenticated={!!token}
-        userName="User"
+        userName={userData?.name || "User"}
         onLogout={handleLogout}
       />
       

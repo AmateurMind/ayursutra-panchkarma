@@ -12,15 +12,17 @@ import { initializeTherapyNotifications } from '../services/therapyNotificationS
 
 const Appointment = () => {
   const { docId } = useParams();
-  const { doctors, currencySymbol, backendUrl, token, getDoctorsData } =
+  const { doctors, currencySymbol, backendUrl, token, getDoctorsData, userData, setUserData, setToken } =
     useContext(AppContext);
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   const navigate = useNavigate();
   
   const handleLogout = () => {
-    // Implement logout logic here
-    console.log('Logout clicked');
+    localStorage.removeItem('token');
+    setUserData(false);
+    setToken('');
+    navigate('/');
   };
 
   const [docInfo, setDocInfo] = useState(null);
@@ -189,7 +191,7 @@ const Appointment = () => {
       <ModernHeader
         userRole="patient"
         isAuthenticated={!!token}
-        userName="User" 
+        userName={userData?.name || "User"} 
         onLogout={handleLogout}
       />
       

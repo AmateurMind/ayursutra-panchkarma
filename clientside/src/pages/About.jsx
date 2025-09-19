@@ -26,21 +26,21 @@ const About = () => {
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-primary/5 to-background py-16">
+        <section className="bg-gradient-to-b from-primary/5 to-background py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">
               About <span className="text-primary">Ayursutra</span>
             </h1>
-            <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-3xl mx-auto">
               Your trusted partner in authentic PanchKarma therapies and holistic Ayurvedic wellness.
             </p>
           </div>
         </section>
 
         {/* Main Content */}
-        <section className="py-16">
+        <section className="py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               {/* Image */}
               <div className="order-2 lg:order-1">
                 <img
@@ -53,19 +53,19 @@ const About = () => {
               {/* Content */}
               <div className="order-1 lg:order-2 space-y-6">
                 <div className="space-y-4">
-                  <p className="text-lg text-text-primary leading-relaxed">
+                  <p className="text-base sm:text-lg text-text-primary leading-relaxed">
                     Welcome to <strong className="text-primary">Ayursutra</strong>, your trusted destination for authentic PanchKarma therapies. We specialize in the five classical detoxification and rejuvenation treatments of Ayurveda, bringing you ancient wisdom through modern, professional practice.
                   </p>
-                  <p className="text-lg text-text-primary leading-relaxed">
+                  <p className="text-base sm:text-lg text-text-primary leading-relaxed">
                     Our center is committed to preserving and delivering genuine PanchKarma treatments - <strong>Vamana, Virechana, Basti, Nasya, and Raktamokshana</strong> - administered by certified specialists who understand the profound healing potential of these time-tested therapies.
                   </p>
                 </div>
                 
-                <div className="bg-primary/5 p-6 rounded-lg border-l-4 border-primary">
-                  <h3 className="text-xl font-heading font-bold text-foreground mb-3">
+                <div className="bg-primary/5 p-4 sm:p-6 rounded-lg border-l-4 border-primary">
+                  <h3 className="text-lg sm:text-xl font-heading font-bold text-foreground mb-3">
                     🌿 Our Vision
                   </h3>
-                  <p className="text-text-primary leading-relaxed">
+                  <p className="text-text-primary leading-relaxed text-sm sm:text-base">
                     To make authentic PanchKarma therapies accessible to everyone seeking deep healing and rejuvenation. We aim to create a sanctuary where traditional Ayurvedic detoxification meets modern wellness standards, empowering you to achieve optimal health naturally.
                   </p>
                 </div>
@@ -130,16 +130,16 @@ const About = () => {
               <p className="text-xl mb-8 opacity-90">
                 Connect with our certified Ayursutra specialists and discover the transformative power of authentic Ayurvedic detoxification.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <button
                   onClick={() => navigate('/doctors')}
-                  className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                  className="bg-white text-primary px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors touch-target text-sm sm:text-base"
                 >
                   🌿 Find Specialists
                 </button>
                 <button
                   onClick={() => navigate('/contact')}
-                  className="bg-white/10 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/20"
+                  className="bg-white/10 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/20 touch-target text-sm sm:text-base"
                 >
                   💬 Contact Us
                 </button>

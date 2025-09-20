@@ -9,6 +9,7 @@ import MyProfile from "./pages/MyProfile";
 import MyAppointments from "./pages/MyAppointments";
 import Appointment from "./pages/Appointment";
 import TherapyPreparation from "./pages/TherapyPreparation";
+import QuickBooking from "./pages/QuickBooking";
 import Footer from "./components/Footer";
 import AutoLaunchChatbot from "./components/ui/AutoLaunchChatbot";
 import { ToastContainer } from "react-toastify";
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/my-appointments" element={<MyAppointments />} />
         <Route path="/appointment/:docId" element={<Appointment />} />
         <Route path="/therapy-preparation" element={<TherapyPreparation />} />
+        <Route path="/quick-booking" element={<QuickBooking />} />
       </Routes>
       <Footer />
       {/* Global Auto-Launching Chatbot */}

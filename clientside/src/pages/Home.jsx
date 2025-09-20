@@ -83,6 +83,30 @@ const Home = () => {
           <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gradient-to-tr from-secondary/10 to-transparent"></div>
         </section>
 
+        {/* Quick Booking Call-to-Action */}
+        <section className="px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-gradient-to-r from-secondary/10 to-accent/10 rounded-2xl p-8 border border-secondary/20">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                🗣️ Book with Natural Language
+              </h2>
+              <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+                Simply tell us what you need in plain English - "Book Vamana therapy tomorrow at 4 PM" or "Schedule with Dr. Sharma next Monday"
+              </p>
+              <Button
+                variant="primary"
+                size="lg"
+                className="bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white shadow-elevated hover-lift"
+                iconName="MessageCircle"
+                iconPosition="right"
+                onClick={() => navigate('/quick-booking')}
+              >
+                Try Quick Booking Assistant
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* Existing components with modern styling */}
         <div className="px-4 sm:px-6 lg:px-8">
           <SpecialityMenu />

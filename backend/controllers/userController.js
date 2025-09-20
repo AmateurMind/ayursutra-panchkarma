@@ -185,6 +185,166 @@ const listAppointment = async (req, res) => {
   }
 };
 
+// API for quick booking with natural language processing
+const quickBookAppointment = async (req, res) => {
+  try {
+    const { userId, specialty, doctorName, slotDate, slotTime } = req.body;
+
+    // Convert YYYY-MM-DD date format to day_month_year format
+    const dateObj = new Date(slotDate);
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+    const formattedSlotDate = `${day}_${month}_${year}`;
+
+    // Find available doctors based on the parsed data
+    let query = { available: true };
+    
+    // If specialty is specified, add it to the query
+    if (specialty) {
+      query.speciality = specialty;
+    }
+
+    // If doctor name is specified, add it to the query
+    if (doctorName) {
+      query.name = { $regex: doctorName, $options: 'i' }; // Case insensitive search
+    }
+
+    const availableDoctors = await doctorModel.find(query).select("-password");
+
+    if (availableDoctors.length === 0) {
+      return res.json({ success: false, message: "No available doctors found for the specified criteria" });
+    }
+
+    // Generate available time slots (10:00 AM to 9:00 PM, 30-minute intervals)
+    const generateTimeSlots = () => {
+      const slots = [];
+      for (let hour = 10; hour <= 21; hour++) {
+        if (hour <= 21) slots.push(`${hour.toString().padStart(2, '0')}:00`);
+        if (hour < 21) slots.push(`${hour.toString().padStart(2, '0')}:30`);
+      }
+      return slots;
+    };
+
+    // For time ranges (e.g., "4-8"), we need to find available slots
+    let availableDoctor = null;
+    let finalSlotTime = slotTime;
+
+    if (slotTime === 'anytime') {
+      // Find any available slot for the date
+      for (const doctor of availableDoctors) {
+        const slots_booked = doctor.slots_booked[formattedSlotDate] || [];
+        const allSlots = generateTimeSlots();
+        
+        const availableSlot = allSlots.find(slot => !slots_booked.includes(slot));
+        if (availableSlot) {
+          availableDoctor = doctor;
+          finalSlotTime = availableSlot;
+          break;
+        }
+      }
+    } else if (slotTime.includes('-')) {
+      // Handle time ranges like "4-8" or "9-12"
+      const [startHour, endHour] = slotTime.split('-').map(Number);
+      
+      for (const doctor of availableDoctors) {
+        const slots_booked = doctor.slots_booked[formattedSlotDate] || [];
+        let foundSlot = false;
+        
+        // Convert to proper hour format (ensure 10+ for working hours)
+        const actualStartHour = startHour < 10 ? startHour + 12 : startHour;
+        const actualEndHour = endHour < 10 ? endHour + 12 : endHour;
+        
+        for (let hour = Math.max(actualStartHour, 10); hour < Math.min(actualEndHour, 22) && !foundSlot; hour++) {
+          const slots = [`${hour.toString().padStart(2, '0')}:00`, `${hour.toString().padStart(2, '0')}:30`];
+          for (const slot of slots) {
+            if (!slots_booked.includes(slot)) {
+              availableDoctor = doctor;
+              finalSlotTime = slot;
+              foundSlot = true;
+              break;
+            }
+          }
+        }
+        if (foundSlot) break;
+      }
+    } else {
+      // Specific time slot - convert to proper format if needed
+      let formattedTime = slotTime;
+      if (slotTime.includes(':') && slotTime.length === 4) {
+        formattedTime = slotTime.padStart(5, '0'); // Convert "9:00" to "09:00"
+      }
+      
+      for (const doctor of availableDoctors) {
+        const slots_booked = doctor.slots_booked[formattedSlotDate] || [];
+        if (!slots_booked.includes(formattedTime)) {
+          availableDoctor = doctor;
+          finalSlotTime = formattedTime;
+          break;
+        }
+      }
+    }
+
+    if (!availableDoctor) {
+      return res.json({ success: false, message: "No available slots found for the specified time" });
+    }
+
+    // Book the appointment using the existing logic
+    let slots_booked = availableDoctor.slots_booked;
+    
+    if (slots_booked[formattedSlotDate]) {
+      slots_booked[formattedSlotDate].push(finalSlotTime);
+    } else {
+      slots_booked[formattedSlotDate] = [finalSlotTime];
+    }
+
+    const userData = await userModel.findById(userId).select("-password");
+
+    const appointmentData = {
+      userId,
+      docId: availableDoctor._id,
+      userData,
+      docData: {
+        _id: availableDoctor._id,
+        name: availableDoctor.name,
+        email: availableDoctor.email,
+        image: availableDoctor.image,
+        speciality: availableDoctor.speciality,
+        degree: availableDoctor.degree,
+        experience: availableDoctor.experience,
+        about: availableDoctor.about,
+        fees: availableDoctor.fees,
+        address: availableDoctor.address
+      },
+      amount: availableDoctor.fees,
+      slotTime: finalSlotTime,
+      slotDate: formattedSlotDate,
+      date: Date.now(),
+    };
+
+    const newAppointment = new appointmentModel(appointmentData);
+    await newAppointment.save();
+
+    // Save new slots data in docData
+    await doctorModel.findByIdAndUpdate(availableDoctor._id, { slots_booked });
+
+    res.json({ 
+      success: true, 
+      message: "Appointment Booked Successfully",
+      appointment: {
+        doctorName: availableDoctor.name,
+        specialty: availableDoctor.speciality,
+        slotDate,
+        slotTime: finalSlotTime,
+        fees: availableDoctor.fees
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 // API to cancel appointment
 const cancelAppointment = async (req, res) => {
   try {
@@ -228,6 +388,7 @@ export {
   getProfile,
   updateProfile,
   bookAppointment,
+  quickBookAppointment,
   listAppointment,
   cancelAppointment,
 };

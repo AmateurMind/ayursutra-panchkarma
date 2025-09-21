@@ -45,25 +45,59 @@ const QuickBooking = () => {
     try {
       // Parse the natural language input
       const parsed = parseBookingRequest(input);
+      console.log('Parsed booking data:', parsed);
+      
+      // If we have existing parsed data, merge it with new data (preserve existing info)
+      let mergedData = { ...parsed };
+      if (parsedData) {
+        // Keep existing data if new parsing didn't find it
+        if (!parsed.doctorName && parsedData.doctorName) {
+          mergedData.doctorName = parsedData.doctorName;
+        }
+        if (!parsed.specialty && parsedData.specialty) {
+          mergedData.specialty = parsedData.specialty;
+        }
+        if (!parsed.slotDate && parsedData.slotDate) {
+          mergedData.slotDate = parsedData.slotDate;
+        }
+        if (!parsed.slotTime && parsedData.slotTime) {
+          mergedData.slotTime = parsedData.slotTime;
+        }
+        
+        // Recalculate missing fields
+        mergedData.missingFields = [];
+        if (!mergedData.slotDate) mergedData.missingFields.push('slotDate');
+        if (!mergedData.slotTime) mergedData.missingFields.push('slotTime');
+      }
+      
+      console.log('Merged booking data:', mergedData);
       
       // Add assistant response
-      if (parsed.missingFields.length > 0) {
-        const followUpQuestion = generateFollowUpQuestion(parsed.missingFields);
-        addToConversation(followUpQuestion, false, parsed);
-        setParsedData(parsed);
+      if (mergedData.missingFields.length > 0) {
+        let contextMessage = "Got it! Here's what I have so far:\n\n";
+        if (mergedData.specialty) contextMessage += `✅ Therapy: ${mergedData.specialty}\n`;
+        if (mergedData.doctorName) contextMessage += `✅ Doctor: ${mergedData.doctorName}\n`;
+        if (mergedData.slotDate) contextMessage += `✅ Date: ${formatDisplayDate(mergedData.slotDate)}\n`;
+        if (mergedData.slotTime) contextMessage += `✅ Time: ${formatDisplayTime(mergedData.slotTime)}\n`;
+        
+        const followUpQuestion = generateFollowUpQuestion(mergedData.missingFields);
+        const fullMessage = contextMessage + "\n" + followUpQuestion;
+        
+        addToConversation(fullMessage, false, mergedData);
+        setParsedData(mergedData);
       } else {
         // All required fields are present
         const confirmationMessage = `I understand you'd like to book:
         
-${parsed.specialty ? `• Therapy: ${parsed.specialty}` : ''}
-${parsed.doctorName ? `• Doctor: ${parsed.doctorName}` : '• Doctor: Any available specialist'}
-• Date: ${formatDisplayDate(parsed.slotDate)}
-• Time: ${formatDisplayTime(parsed.slotTime)}
+${mergedData.specialty ? `• Therapy: ${mergedData.specialty}` : ''}
+${mergedData.doctorName ? `• Doctor: ${mergedData.doctorName}` : '• Doctor: Any available specialist'}
+• Date: ${formatDisplayDate(mergedData.slotDate)}
+• Time: ${formatDisplayTime(mergedData.slotTime)}
 
 Would you like me to proceed with this booking?`;
         
-        addToConversation(confirmationMessage, false, parsed);
-        setParsedData(parsed);
+        addToConversation(confirmationMessage, false, mergedData);
+        setParsedData(mergedData);
         setShowConfirmation(true);
       }
     } catch (error) {
@@ -178,11 +212,15 @@ You can view and manage your appointments in the 'My Appointments' section.`,
 
   const exampleQueries = [
     "Book Vamana therapy tomorrow between 4 and 8",
-    "Book on 25 Sep anywhere between 1-10",
-    "Booking for Dr. Rajesh Sharma specific doctor",
-    "Book anything on 29 anytime",
-    "Schedule Basti therapy next Monday morning",
-    "Book Complete PanchKarma with Dr. Priya next week"
+    "Schedule Virechana with Dr. Meera next Monday",
+    "Book Basti therapy with Rajesh tomorrow morning",
+    "Book Nasya therapy on 25 Sep anytime",
+    "Schedule Raktamokshana with Dr. Suresh next week",
+    "Book Complete PanchKarma with Priya on Friday",
+    "Book liver detox tomorrow afternoon",
+    "Schedule enema therapy next Monday",
+    "Book bloodletting with Sneha anytime",
+    "Book nasal therapy tomorrow between 2-5"
   ];
 
   return (

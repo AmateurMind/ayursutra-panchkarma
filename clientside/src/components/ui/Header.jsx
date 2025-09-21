@@ -37,6 +37,12 @@ const Header = ({
       isActive: location?.pathname === '/doctors'
     },
     {
+      label: 'Quick Booking',
+      path: '/quick-booking',
+      icon: 'MessageCircle',
+      isActive: location?.pathname === '/quick-booking'
+    },
+    {
       label: 'My Therapies',
       path: '/my-appointments',
       icon: 'Calendar',
@@ -68,6 +74,12 @@ const Header = ({
       path: '/doctors',
       icon: 'User',
       isActive: location?.pathname === '/doctors'
+    },
+    {
+      label: 'Quick Booking',
+      path: '/quick-booking',
+      icon: 'MessageCircle',
+      isActive: location?.pathname === '/quick-booking'
     },
     {
       label: 'About',

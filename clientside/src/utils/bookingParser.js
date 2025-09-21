@@ -3,15 +3,32 @@
  * Converts natural language booking requests into structured appointment data
  */
 
-// Common therapy specialties
-const THERAPIES = [
-  'Vamana Therapy',
-  'Virechana Therapy', 
-  'Basti Therapy',
-  'Nasya Therapy',
-  'Raktamokshana Therapy',
-  'Complete PanchKarma'
-];
+// Common therapy specialties with aliases
+const THERAPIES = {
+  'Vamana Therapy': ['vamana', 'therapeutic emesis', 'kapha therapy', 'emesis therapy'],
+  'Virechana Therapy': ['virechana', 'purgation', 'liver detox', 'pitta therapy', 'medicated purgation'],
+  'Basti Therapy': ['basti', 'enema', 'medicated enema', 'vata therapy', 'colon therapy'],
+  'Nasya Therapy': ['nasya', 'nasal', 'nasal therapy', 'head therapy', 'sinus therapy'],
+  'Raktamokshana Therapy': ['raktamokshana', 'bloodletting', 'blood purification', 'leech therapy', 'cupping'],
+  'Complete PanchKarma': ['complete panchkarma', 'full panchkarma', 'panchkarma', 'panchakarma', 'complete detox', 'full detox']
+};
+
+// Common doctor name variations and aliases
+const DOCTOR_ALIASES = {
+  'Aarav': ['Dr. Aarav Sharma', 'aarav', 'sharma'],
+  'Meera': ['Dr. Meera Nair', 'meera', 'nair'],
+  'Rajesh': ['Dr. Rajesh Verma', 'rajesh', 'verma'],
+  'Kavita': ['Dr. Kavita Deshmukh', 'kavita', 'deshmukh'],
+  'Suresh': ['Dr. Suresh Iyer', 'suresh', 'iyer'],
+  'Priya': ['Dr. Priya Kulkarni', 'priya', 'kulkarni'],
+  'Aditya': ['Dr. Aditya Raghavan', 'aditya', 'raghavan'],
+  'Neha': ['Dr. Neha Gupta', 'neha', 'gupta'],
+  'Vikram': ['Dr. Vikram Patil', 'vikram', 'patil'],
+  'Sneha': ['Dr. Sneha Menon', 'sneha', 'menon'],
+  'Manish': ['Dr. Manish Tiwari', 'manish', 'tiwari'],
+  'Radhika': ['Dr. Radhika Joshi', 'radhika', 'joshi'],
+  'Kiran': ['Dr. Kiran Shetty', 'kiran', 'shetty']
+};
 
 // Date parsing helpers
 const getDateFromNaturalLanguage = (input) => {
@@ -174,29 +191,57 @@ const formatDate = (date) => {
 
 // Extract doctor name from input
 const extractDoctorName = (input) => {
+  const lowerInput = input.toLowerCase();
+  
+  // First check for explicit doctor patterns
   const patterns = [
-    /doctor\s+((?:[A-Z][a-z]+\s*)+)/i,
-    /dr\.?\s+((?:[A-Z][a-z]+\s*)+)/i,
-    /with\s+((?:[A-Z][a-z]+\s*)+)/i,
-    /specific\s+doctor\s+((?:[A-Z][a-z]+\s*)+)/i
+    /(?:doctor|dr\.?)\s+((?:[a-z]+\s*)+)/i,
+    /with\s+(?:doctor|dr\.?)?\s*((?:[a-z]+\s*)+)/i,
+    /specific\s+doctor\s+((?:[a-z]+\s*)+)/i,
+    /(?:book|schedule)\s+(?:for|with)\s+(?:doctor|dr\.?)?\s*((?:[a-z]+\s*)+)/i
   ];
   
   for (const pattern of patterns) {
     const match = input.match(pattern);
     if (match) {
-      return match[1].trim();
+      const extractedName = match[1].trim().toLowerCase();
+      // Try to match against doctor aliases
+      for (const [key, aliases] of Object.entries(DOCTOR_ALIASES)) {
+        if (aliases.some(alias => alias.toLowerCase().includes(extractedName) || extractedName.includes(alias.toLowerCase()))) {
+          return aliases[0]; // Return the full doctor name
+        }
+      }
+      return match[1].trim(); // Return as-is if no alias match
     }
   }
   
-  // Look for capitalized names (likely proper nouns)
-  const namePattern = /\b([A-Z][a-z]+\s+[A-Z][a-z]+)\b/g;
+  // Check for any doctor name mentions in the text
+  for (const [key, aliases] of Object.entries(DOCTOR_ALIASES)) {
+    if (aliases.some(alias => {
+      const aliasLower = alias.toLowerCase();
+      // Check for exact word matches to avoid partial matches
+      const words = lowerInput.split(/\s+/);
+      return words.some(word => {
+        // Remove punctuation and check
+        const cleanWord = word.replace(/[.,!?;:]/, '');
+        return cleanWord === aliasLower || 
+               (aliasLower.includes(' ') && lowerInput.includes(aliasLower)) ||
+               (aliasLower.startsWith('dr.') && lowerInput.includes(aliasLower.substring(4)));
+      });
+    })) {
+      return aliases[0]; // Return the full doctor name
+    }
+  }
+  
+  // Look for capitalized names (likely proper nouns) as fallback
+  const namePattern = /\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\b/g;
   const matches = [...input.matchAll(namePattern)];
   
   for (const match of matches) {
     const name = match[1];
     // Skip common words that might be capitalized
     const skipWords = ['Book', 'Booking', 'Tomorrow', 'Today', 'Monday', 'Tuesday', 'Wednesday', 
-                      'Thursday', 'Friday', 'Saturday', 'Sunday', 'Therapy', 'Complete'];
+                      'Thursday', 'Friday', 'Saturday', 'Sunday', 'Therapy', 'Complete', 'Vamana', 'Virechana', 'Basti', 'Nasya', 'Raktamokshana'];
     if (!skipWords.some(word => name.includes(word))) {
       return name;
     }
@@ -209,9 +254,22 @@ const extractDoctorName = (input) => {
 const extractSpecialty = (input) => {
   const lowerInput = input.toLowerCase();
   
-  return THERAPIES.find(therapy => 
-    lowerInput.includes(therapy.toLowerCase())
-  ) || null;
+  // Check each therapy and its aliases
+  for (const [therapyName, aliases] of Object.entries(THERAPIES)) {
+    // Check the main therapy name
+    if (lowerInput.includes(therapyName.toLowerCase())) {
+      return therapyName;
+    }
+    
+    // Check all aliases
+    for (const alias of aliases) {
+      if (lowerInput.includes(alias.toLowerCase())) {
+        return therapyName;
+      }
+    }
+  }
+  
+  return null;
 };
 
 /**
@@ -259,5 +317,5 @@ export const generateFollowUpQuestion = (missingFields) => {
 export default {
   parseBookingRequest,
   generateFollowUpQuestion,
-  THERAPIES
+  THERAPIES: Object.keys(THERAPIES)
 };

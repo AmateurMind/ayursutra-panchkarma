@@ -123,6 +123,12 @@ Would you like me to proceed with this booking?`;
     }
     
     if (!parsedData) return;
+    
+    // Check if user data is loaded
+    if (!userData || !userData.email) {
+      toast.warn('Loading user profile... Please try again in a moment.');
+      return;
+    }
 
     try {
       setIsProcessing(true);
@@ -152,15 +158,36 @@ Would you like me to proceed with this booking?`;
         
         // Send email notifications to both patient and doctor
         try {
-          // Initialize notification service with the API keys
+          console.log('Starting email notification process...');
+          console.log('User data:', userData);
+          console.log('Appointment info:', appointmentInfo);
+          
+          // Check if user has email
+          if (!userData || !userData.email) {
+            console.error('User data or email missing:', userData);
+            toast.warn('Unable to send email confirmation - user email not found');
+            return;
+          }
+          
+          // Initialize notification service with explicit API keys
           const notificationService = initializeTherapyNotifications(
             '8501ef93-4fb1-427e-b8f8-4c34686a53a6', // Patient API key
             '77c9f68f-35c2-4a19-ae00-9e87cc827679'  // Doctor API key
           );
           
-          // Prepare appointment data for email notifications
+          console.log('Notification service initialized with API keys');
+          console.log('Patient API key:', '8501ef93-4fb1-427e-b8f8-4c34686a53a6');
+          console.log('Doctor API key:', '77c9f68f-35c2-4a19-ae00-9e87cc827679');
+          
+          // Prepare appointment data for email notifications  
           const appointmentData = {
-            userData: userData,
+            userData: {
+              name: userData.name,
+              email: userData.email,
+              phone: userData.phone || 'Not provided',
+              dob: userData.dob || null,
+              gender: userData.gender || 'Not provided'
+            },
             docData: {
               name: appointmentInfo.doctorName,
               email: appointmentInfo.doctorEmail || 'doctor@panchkarmawellness.com',
@@ -171,31 +198,42 @@ Would you like me to proceed with this booking?`;
                 line2: 'Pune'
               }
             },
-            slotDate: appointmentInfo.slotDate,
+            slotDate: appointmentInfo.slotDate, // Should be in day_month_year format from backend
             slotTime: appointmentInfo.slotTime,
             amount: appointmentInfo.fees
           };
           
+          console.log('Final appointment data for email:', appointmentData);
+          
           // Send notifications (non-blocking)
-          notificationService.sendBookingNotifications(appointmentData)
+          console.log('Calling sendBookingNotifications...');
+          
+          const notificationPromise = notificationService.sendBookingNotifications(appointmentData);
+          console.log('Notification promise created:', notificationPromise);
+          
+          notificationPromise
             .then((notificationResult) => {
-              console.log('Quick booking notifications sent:', notificationResult);
-              if (notificationResult.patientNotification && notificationResult.doctorNotification) {
+              console.log('✅ Quick booking notifications SUCCESS:', notificationResult);
+              if (notificationResult && notificationResult.patientNotification && notificationResult.doctorNotification) {
                 toast.success('📧 Booking confirmations sent to both you and the specialist!');
-              } else if (notificationResult.patientNotification) {
+              } else if (notificationResult && notificationResult.patientNotification) {
                 toast.success('📧 Booking confirmation sent to your email!');
               } else {
-                console.warn('Some notifications failed to send:', notificationResult.errors);
+                console.warn('❌ Some notifications failed:', notificationResult);
+                toast.info('Booking successful, but some email notifications may have failed');
               }
             })
             .catch((error) => {
-              console.error('Error sending quick booking notifications:', error);
-              // Don't show error to user as booking was successful
+              console.error('❌ Error sending quick booking notifications:');
+              console.error('Error message:', error.message);
+              console.error('Error stack:', error.stack);
+              console.error('Full error object:', error);
+              toast.warn('Booking successful, but email notifications failed to send');
             });
             
         } catch (notificationError) {
           console.error('Notification service error:', notificationError);
-          // Don't block the booking flow for notification errors
+          toast.warn('Booking successful, but unable to send email notifications');
         }
         
         addToConversation(

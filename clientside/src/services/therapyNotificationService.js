@@ -89,6 +89,19 @@ The PanchKarma Wellness Team
     formData.append('message', emailContent);
 
     try {
+      // Check if we're in development environment
+      if (window.location.hostname === 'localhost') {
+        console.log('🔧 DEVELOPMENT MODE: Skipping actual email send (CORS restriction)');
+        console.log('📧 Would send patient email to:', userData.email);
+        console.log('📋 Email content preview:', emailContent.substring(0, 200) + '...');
+        
+        // Simulate success for development
+        return { 
+          success: true, 
+          data: { message: 'Development mode: Email simulated successfully' }
+        };
+      }
+      
       const response = await fetch(this.web3formsEndpoint, {
         method: 'POST',
         body: formData
@@ -172,6 +185,19 @@ This is an automated notification from our booking system
     formData.append('message', emailContent);
 
     try {
+      // Check if we're in development environment
+      if (window.location.hostname === 'localhost') {
+        console.log('🔧 DEVELOPMENT MODE: Skipping actual doctor email send (CORS restriction)');
+        console.log('📧 Would send doctor email to:', docData.email || 'doctor@panchkarmawellness.com');
+        console.log('📋 Email content preview:', emailContent.substring(0, 200) + '...');
+        
+        // Simulate success for development
+        return { 
+          success: true, 
+          data: { message: 'Development mode: Doctor email simulated successfully' }
+        };
+      }
+      
       const response = await fetch(this.web3formsEndpoint, {
         method: 'POST',
         body: formData

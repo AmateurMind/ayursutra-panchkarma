@@ -333,10 +333,13 @@ const quickBookAppointment = async (req, res) => {
       message: "Appointment Booked Successfully",
       appointment: {
         doctorName: availableDoctor.name,
+        doctorEmail: availableDoctor.email,
         specialty: availableDoctor.speciality,
         slotDate,
         slotTime: finalSlotTime,
-        fees: availableDoctor.fees
+        fees: availableDoctor.fees,
+        doctorExperience: availableDoctor.experience,
+        doctorAddress: availableDoctor.address
       }
     });
   } catch (error) {

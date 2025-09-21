@@ -4,6 +4,7 @@ import ModernHeader from '../components/ui/Header';
 import Button from '../components/ui/Button';
 import { AppContext } from '../context/AppContext';
 import { parseBookingRequest, generateFollowUpQuestion } from '../utils/bookingParser';
+import { initializeTherapyNotifications } from '../services/therapyNotificationService';
 import { toast } from 'react-toastify';
 
 const QuickBooking = () => {
@@ -137,6 +138,55 @@ Would you like me to proceed with this booking?`;
       
       if (result.success) {
         const appointmentInfo = result.appointment;
+        
+        // Send email notifications to both patient and doctor
+        try {
+          // Initialize notification service with the API keys
+          const notificationService = initializeTherapyNotifications(
+            '8501ef93-4fb1-427e-b8f8-4c34686a53a6', // Patient API key
+            '77c9f68f-35c2-4a19-ae00-9e87cc827679'  // Doctor API key
+          );
+          
+          // Prepare appointment data for email notifications
+          const appointmentData = {
+            userData: userData,
+            docData: {
+              name: appointmentInfo.doctorName,
+              email: appointmentInfo.doctorEmail || 'doctor@panchkarmawellness.com',
+              speciality: appointmentInfo.specialty,
+              experience: appointmentInfo.doctorExperience || '10+ Years',
+              address: appointmentInfo.doctorAddress || {
+                line1: 'PanchKarma Wellness Center',
+                line2: 'Pune'
+              }
+            },
+            slotDate: appointmentInfo.slotDate,
+            slotTime: appointmentInfo.slotTime,
+            amount: appointmentInfo.fees
+          };
+          
+          // Send notifications (non-blocking)
+          notificationService.sendBookingNotifications(appointmentData)
+            .then((notificationResult) => {
+              console.log('Quick booking notifications sent:', notificationResult);
+              if (notificationResult.patientNotification && notificationResult.doctorNotification) {
+                toast.success('📧 Booking confirmations sent to both you and the specialist!');
+              } else if (notificationResult.patientNotification) {
+                toast.success('📧 Booking confirmation sent to your email!');
+              } else {
+                console.warn('Some notifications failed to send:', notificationResult.errors);
+              }
+            })
+            .catch((error) => {
+              console.error('Error sending quick booking notifications:', error);
+              // Don't show error to user as booking was successful
+            });
+            
+        } catch (notificationError) {
+          console.error('Notification service error:', notificationError);
+          // Don't block the booking flow for notification errors
+        }
+        
         addToConversation(
           `✅ Your appointment has been successfully booked!
 
@@ -146,6 +196,8 @@ Would you like me to proceed with this booking?`;
 • Date: ${formatDisplayDate(appointmentInfo.slotDate)}
 • Time: ${appointmentInfo.slotTime}
 • Fees: ₹${appointmentInfo.fees}
+
+📧 Confirmation emails are being sent to both you and your specialist.
 
 You can view and manage your appointments in the 'My Appointments' section.`,
           false

@@ -149,7 +149,7 @@ const Header = ({
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => handleNavigation('/login')}
+          onClick={() => handleNavigation('/login?mode=login')}
         >
           Login
         </Button>
@@ -248,7 +248,7 @@ const Header = ({
                   <Button
                     variant="ghost"
                     className="w-full"
-                    onClick={() => handleNavigation('/login')}
+                    onClick={() => handleNavigation('/login?mode=login')}
                   >
                     Login
                   </Button>

@@ -5,13 +5,17 @@ import Button from '../components/ui/Button';
 import Icon from '../components/AppIcon';
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Login = () => {
   const { backendUrl, token, setToken } = useContext(AppContext);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const [state, setState] = useState("Sign Up");
+  // Initialize state based on URL parameter (mode=login for "Welcome Back")
+  const [state, setState] = useState(
+    searchParams.get('mode') === 'login' ? 'Login' : 'Sign Up'
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");

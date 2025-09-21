@@ -38,6 +38,12 @@ const QuickBooking = () => {
   const handleInputSubmit = async () => {
     if (!input.trim()) return;
     
+    // Check if user is logged in before processing booking request
+    if (!token) {
+      toast.warn('Please login first to book an appointment');
+      return navigate('/login?mode=login');
+    }
+    
     setIsProcessing(true);
     
     // Add user message to conversation
@@ -111,7 +117,12 @@ Would you like me to proceed with this booking?`;
   };
 
   const handleConfirmBooking = async () => {
-    if (!parsedData || !token) return;
+    if (!token) {
+      toast.warn('Please login to book an appointment');
+      return navigate('/login?mode=login');
+    }
+    
+    if (!parsedData) return;
 
     try {
       setIsProcessing(true);
@@ -354,21 +365,26 @@ You can view and manage your appointments in the 'My Appointments' section.`,
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Type your booking request here... (e.g., 'Book Vamana therapy tomorrow between 4 and 8')"
-                  className="w-full p-4 border border-gray-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                  placeholder={token 
+                    ? "Type your booking request here... (e.g., 'Book Vamana therapy tomorrow between 4 and 8')"
+                    : "Please login first to book appointments..."
+                  }
+                  className={`w-full p-4 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary ${
+                    token ? 'border-gray-200' : 'border-red-200 bg-red-50'
+                  }`}
                   rows="3"
-                  disabled={isProcessing}
+                  disabled={isProcessing || !token}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <Button
-                  onClick={handleInputSubmit}
-                  disabled={!input.trim() || isProcessing}
-                  variant="primary"
+                  onClick={token ? handleInputSubmit : () => navigate('/login?mode=login')}
+                  disabled={isProcessing || (!token && !input.trim())}
+                  variant={token ? "primary" : "secondary"}
                   size="lg"
                   className="whitespace-nowrap"
                 >
-                  {isProcessing ? 'Processing...' : 'Send'}
+                  {isProcessing ? 'Processing...' : (token ? 'Send' : 'Login Required')}
                 </Button>
                 
                 {showConfirmation && (

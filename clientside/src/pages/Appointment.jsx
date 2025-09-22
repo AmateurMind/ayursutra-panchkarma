@@ -125,8 +125,12 @@ const Appointment = () => {
         
         // Send booking notifications to both patient and doctor
         try {
-          // Initialize notification service (uses default config)
-          const notificationService = initializeTherapyNotifications();
+          // Initialize notification service with explicit API keys
+          const patientApiKey = '8501ef93-4fb1-427e-b8f8-4c34686a53a6';
+          const doctorApiKey = '77c9f68f-35c2-4a19-ae00-9e87cc827679';
+          const notificationService = initializeTherapyNotifications(patientApiKey, doctorApiKey);
+          
+          console.log('🔧 DEBUG: Initialized notification service with patient key:', patientApiKey);
           
           // Get user data for notifications
           const userResponse = await axios.get(backendUrl + "/api/user/get-profile", {
@@ -140,6 +144,14 @@ const Appointment = () => {
             slotTime,
             amount: docInfo.fees
           };
+          
+          console.log('📋 DEBUG: Appointment data for notifications:', {
+            patientEmail: appointmentData.userData?.email,
+            patientName: appointmentData.userData?.name,
+            doctorName: appointmentData.docData?.name,
+            slotDate,
+            slotTime
+          });
           
           // Send notifications (non-blocking)
           notificationService.sendBookingNotifications(appointmentData)

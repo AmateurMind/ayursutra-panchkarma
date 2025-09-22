@@ -91,13 +91,17 @@ The PanchKarma Wellness Team
 
     try {
       console.log('📧 Sending patient booking confirmation via Web3Forms to:', userData.email);
+      console.log('🔑 Using patient API key:', this.patientApiKey);
+      console.log('🎯 Web3Forms endpoint:', this.web3formsEndpoint);
       
       const response = await fetch(this.web3formsEndpoint, {
         method: 'POST',
         body: formData
       });
 
+      console.log('📡 Web3Forms response status:', response.status);
       const result = await response.json();
+      console.log('📋 Web3Forms result:', result);
       
       if (result.success) {
         console.log('✅ Patient booking confirmation sent successfully to:', userData.email);

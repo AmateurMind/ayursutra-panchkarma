@@ -28,34 +28,80 @@ export class TherapyNotificationService {
   }
 
   /**
-   * Send booking confirmation to patient using backend API
+   * Send booking confirmation to patient using Web3Forms
    */
   async sendPatientBookingConfirmation(appointmentData) {
     const { userData, docData, slotDate, slotTime, amount } = appointmentData;
 
+    const formData = new FormData();
+    formData.append('access_key', this.patientApiKey);
+    formData.append('to', userData.email);
+    formData.append('subject', '🌿 PanchKarma Therapy Booking Confirmed');
+    formData.append('from_name', this.patientConfig.fromName);
+    formData.append('reply_to', this.patientConfig.replyTo);
+
+    const emailContent = `
+🌿 PanchKarma Therapy Booking Confirmed!
+
+Dear ${userData.name},
+
+We're excited to confirm your PanchKarma therapy booking! Your path to holistic wellness and detoxification is now scheduled with our certified specialist.
+
+📋 BOOKING DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏥 Specialist: ${docData.name}
+🎯 Specialization: ${docData.speciality}
+⭐ Experience: ${docData.experience}
+🗓 Date: ${this.formatSlotDate(slotDate)}
+⏰ Time: ${slotTime}
+📍 Location: ${docData.address?.line1 || 'PanchKarma Wellness Center'}, ${docData.address?.line2 || ''}
+💰 Consultation Fee: ₹${amount}
+
+🧘‍♀️ PRE-THERAPY PREPARATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PanchKarma requires specific preparation for optimal results:
+
+• Begin light diet (laghu ahara) 3 days before therapy
+• Avoid heavy, oily, and processed foods
+• Stay hydrated with warm water and herbal teas
+• Complete any prescribed pre-therapy medications
+• Prepare mentally for the detoxification process
+
+📞 NEED ASSISTANCE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Our PanchKarma specialists are here to guide you:
+
+📱 Phone: +1 (555) 123-4567
+📧 Email: support@panchkarmawellness.com
+🕐 Support: 24/7 Support
+
+We look forward to supporting your wellness journey with authentic PanchKarma therapies.
+
+With wellness,
+The PanchKarma Wellness Team
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌿 PanchKarma Wellness | Authentic Ayurvedic Detoxification
+📍 54709 Willms Station, Suite 350, Washington, USA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    formData.append('message', emailContent);
+    formData.append('_template', 'table');
+    formData.append('_format', 'html');
+
     try {
-      console.log('📧 Sending patient booking confirmation via backend API to:', userData.email);
+      console.log('📧 Sending patient booking confirmation via Web3Forms to:', userData.email);
       
-      // Get authentication token from localStorage
-      const token = localStorage.getItem('token');
-      
-      const response = await fetch(`${BACKEND_URL}/api/email/send-patient-email`, {
+      const response = await fetch(this.web3formsEndpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'token': token
-        },
-        body: JSON.stringify({
-          appointmentData: appointmentData,
-          type: 'booking_confirmation'
-        })
+        body: formData
       });
 
       const result = await response.json();
       
       if (result.success) {
         console.log('✅ Patient booking confirmation sent successfully to:', userData.email);
-        return { success: true, data: result.data };
+        return { success: true, data: result };
       } else {
         throw new Error(result.message || 'Failed to send patient notification');
       }
@@ -173,11 +219,11 @@ This is an automated notification from our booking system
 
   /**
    * Send both notifications (patient and doctor) for a new booking
-   * Patient: Backend API (dynamic email), Doctor: Web3Forms (static email)
+   * Patient: Web3Forms (dynamic email), Doctor: Web3Forms (static email)
    */
   async sendBookingNotifications(appointmentData) {
     try {
-      console.log('📧 Starting hybrid booking notifications (Backend API + Web3Forms)...');
+      console.log('📧 Starting booking notifications via Web3Forms...');
       
       const results = await Promise.allSettled([
         this.sendPatientBookingConfirmation(appointmentData),
@@ -198,7 +244,7 @@ This is an automated notification from our booking system
         patient: {
           status: patientResult.status,
           success: patientSuccess,
-          method: 'Backend API (dynamic email)',
+          method: 'Web3Forms (dynamic email)',
           recipient: appointmentData.userData?.email
         },
         doctor: {
@@ -212,9 +258,9 @@ This is an automated notification from our booking system
       // Collect detailed error information
       const errors = [];
       if (!patientSuccess && patientResult.status === 'fulfilled' && patientResult.value.error) {
-        errors.push(`Patient (Backend API): ${patientResult.value.error}`);
+        errors.push(`Patient (Web3Forms): ${patientResult.value.error}`);
       } else if (patientResult.status === 'rejected') {
-        errors.push(`Patient (Backend API): ${patientResult.reason}`);
+        errors.push(`Patient (Web3Forms): ${patientResult.reason}`);
       }
       
       if (!doctorSuccess && doctorResult.status === 'fulfilled' && doctorResult.value.error) {
@@ -229,7 +275,7 @@ This is an automated notification from our booking system
         doctorNotification: doctorSuccess,
         hybrid: true, // Indicate this uses hybrid notification system
         methods: {
-          patient: 'Backend API (Nodemailer)',
+          patient: 'Web3Forms',
           doctor: 'Web3Forms'
         },
         errors: errors,

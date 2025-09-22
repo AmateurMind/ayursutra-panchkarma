@@ -156,41 +156,41 @@ Would you like me to proceed with this booking?`;
       if (result.success) {
         const appointmentInfo = result.appointment;
         
-        // Send email notifications to both patient and doctor
+        // Send email notifications using hybrid system (Backend API + Web3Forms)
         try {
-          console.log('Starting email notification process...');
-          console.log('User data:', userData);
-          console.log('Appointment info:', appointmentInfo);
+          console.log('🚀 Starting HYBRID email notification process...');
+          console.log('📊 User data:', userData);
+          console.log('📋 Appointment info:', appointmentInfo);
           
           // Check if user has email
           if (!userData || !userData.email) {
-            console.error('User data or email missing:', userData);
+            console.error('❌ User data or email missing:', userData);
             toast.warn('Unable to send email confirmation - user email not found');
             return;
           }
           
           // Initialize notification service with explicit API keys
           const notificationService = initializeTherapyNotifications(
-            '8501ef93-4fb1-427e-b8f8-4c34686a53a6', // Patient API key
-            '77c9f68f-35c2-4a19-ae00-9e87cc827679'  // Doctor API key
+            '8501ef93-4fb1-427e-b8f8-4c34686a53a6', // Patient API key (Web3Forms - for doctor emails)
+            '77c9f68f-35c2-4a19-ae00-9e87cc827679'  // Doctor API key (Web3Forms)
           );
           
-          console.log('Notification service initialized with API keys');
-          console.log('Patient API key:', '8501ef93-4fb1-427e-b8f8-4c34686a53a6');
-          console.log('Doctor API key:', '77c9f68f-35c2-4a19-ae00-9e87cc827679');
+          console.log('🔧 Hybrid notification service initialized');
+          console.log('📧 Patient emails: Backend API (Nodemailer) → ', userData.email);
+          console.log('👨‍⚕️ Doctor emails: Web3Forms → ', 'doctor@panchkarmawellness.com');
           
           // Prepare appointment data for email notifications  
           const appointmentData = {
             userData: {
               name: userData.name,
-              email: userData.email,
+              email: userData.email, // This will be sent via Backend API
               phone: userData.phone || 'Not provided',
               dob: userData.dob || null,
               gender: userData.gender || 'Not provided'
             },
             docData: {
               name: appointmentInfo.doctorName,
-              email: appointmentInfo.doctorEmail || 'doctor@panchkarmawellness.com',
+              email: appointmentInfo.doctorEmail || 'doctor@panchkarmawellness.com', // This will be sent via Web3Forms
               speciality: appointmentInfo.specialty,
               experience: appointmentInfo.doctorExperience || '10+ Years',
               address: appointmentInfo.doctorAddress || {
@@ -203,32 +203,49 @@ Would you like me to proceed with this booking?`;
             amount: appointmentInfo.fees
           };
           
-          console.log('Final appointment data for email:', appointmentData);
+          console.log('📦 Final appointment data for hybrid email system:', appointmentData);
           
-          // Send notifications (non-blocking)
-          console.log('Calling sendBookingNotifications...');
+          // Send notifications using hybrid system (non-blocking)
+          console.log('🔄 Starting hybrid notification dispatch...');
           
           const notificationPromise = notificationService.sendBookingNotifications(appointmentData);
-          console.log('Notification promise created:', notificationPromise);
+          console.log('⏳ Hybrid notification promise created');
           
           notificationPromise
             .then((notificationResult) => {
-              console.log('✅ Quick booking notifications SUCCESS:', notificationResult);
-              if (notificationResult && notificationResult.patientNotification && notificationResult.doctorNotification) {
-                toast.success('📧 Booking confirmations sent to both you and the specialist!');
-              } else if (notificationResult && notificationResult.patientNotification) {
-                toast.success('📧 Booking confirmation sent to your email!');
+              console.log('🎉 HYBRID booking notifications result:', notificationResult);
+              
+              if (notificationResult && notificationResult.hybrid) {
+                console.log('📊 Notification summary:', notificationResult.summary);
+                
+                if (notificationResult.patientNotification && notificationResult.doctorNotification) {
+                  toast.success('📧 Booking confirmations sent to both you and the specialist!');
+                } else if (notificationResult.patientNotification) {
+                  toast.success('📧 Booking confirmation sent to your email!');
+                  toast.info('Doctor notification may have failed');
+                } else if (notificationResult.doctorNotification) {
+                  toast.info('Specialist notified, but patient confirmation may have failed');
+                } else {
+                  console.warn('⚠️ All notifications failed:', notificationResult);
+                  toast.warn('Booking successful, but email notifications failed');
+                }
+                
+                if (notificationResult.errors && notificationResult.errors.length > 0) {
+                  console.log('📋 Notification errors:', notificationResult.errors);
+                }
               } else {
-                console.warn('❌ Some notifications failed:', notificationResult);
-                toast.info('Booking successful, but some email notifications may have failed');
+                console.warn('⚠️ Non-hybrid notification result:', notificationResult);
+                toast.info('Booking successful, notification system responded unexpectedly');
               }
             })
             .catch((error) => {
-              console.error('❌ Error sending quick booking notifications:');
-              console.error('Error message:', error.message);
-              console.error('Error stack:', error.stack);
-              console.error('Full error object:', error);
-              toast.warn('Booking successful, but email notifications failed to send');
+              console.error('💥 Hybrid notification system error:');
+              console.error('🔍 Error details:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.name
+              });
+              toast.warn('Booking successful, but email notification system encountered an error');
             });
             
         } catch (notificationError) {

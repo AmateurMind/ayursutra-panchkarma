@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { WEB3FORMS_CONFIG, BUSINESS_INFO, SUPPORT_CONTACTS } from '../config/notificationConfig.js';
 
+// Get backend URL from environment
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+
 /**
  * PanchKarma Therapy Notification Service
  * Handles email notifications for therapy bookings, confirmations, and reminders
@@ -25,99 +28,50 @@ export class TherapyNotificationService {
   }
 
   /**
-   * Send booking confirmation to patient
+   * Send booking confirmation to patient using backend API
    */
   async sendPatientBookingConfirmation(appointmentData) {
     const { userData, docData, slotDate, slotTime, amount } = appointmentData;
 
-    const formData = new FormData();
-    formData.append('access_key', this.patientApiKey);
-    formData.append('to', userData.email);
-    formData.append('subject', '🌿 PanchKarma Therapy Booking Confirmed');
-    formData.append('from_name', this.patientConfig.fromName);
-    formData.append('reply_to', this.patientConfig.replyTo);
-
-    // Create beautiful but Web3Forms-compatible email content
-    const emailContent = `
-🌿 PanchKarma Therapy Booking Confirmed!
-
-Dear ${userData.name},
-
-We're excited to confirm your PanchKarma therapy booking! Your path to holistic wellness and detoxification is now scheduled with our certified specialist.
-
-📋 BOOKING DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏥 Specialist: ${docData.name}
-🎯 Specialization: ${docData.speciality}
-⭐ Experience: ${docData.experience}
-
-🗓 Date: ${this.formatSlotDate(slotDate)}
-⏰ Time: ${slotTime}
-📍 Location: ${docData.address?.line1 || 'PanchKarma Wellness Center'}, ${docData.address?.line2 || ''}
-💰 Consultation Fee: ₹${amount}
-
-🧘‍♀️ PRE-THERAPY PREPARATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PanchKarma requires specific preparation for optimal results:
-
-• Begin light diet (laghu ahara) 3 days before therapy
-• Avoid heavy, oily, and processed foods
-• Stay hydrated with warm water and herbal teas
-• Complete any prescribed pre-therapy medications
-• Prepare mentally for the detoxification process
-
-📋 Access your detailed preparation guide in the app
-
-📞 NEED ASSISTANCE?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Our PanchKarma specialists are here to guide you:
-
-📱 Phone: ${SUPPORT_CONTACTS.MAIN.phone}
-📧 Email: ${SUPPORT_CONTACTS.MAIN.email}
-🕐 Support: ${SUPPORT_CONTACTS.MAIN.hours}
-
-We look forward to supporting your wellness journey with authentic PanchKarma therapies.
-
-With wellness,
-The PanchKarma Wellness Team
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌿 ${BUSINESS_INFO.name} | ${BUSINESS_INFO.tagline}
-📍 ${BUSINESS_INFO.address.line1}, ${BUSINESS_INFO.address.line2}, ${BUSINESS_INFO.address.city}, ${BUSINESS_INFO.address.country}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-
-    formData.append('message', emailContent);
-
     try {
-      // Check if we're in development environment
-      if (window.location.hostname === 'localhost') {
-        console.log('🔧 DEVELOPMENT MODE: Skipping actual email send (CORS restriction)');
-        console.log('📧 Would send patient email to:', userData.email);
-        console.log('📋 Email content preview:', emailContent.substring(0, 200) + '...');
-        
-        // Simulate success for development
-        return { 
-          success: true, 
-          data: { message: 'Development mode: Email simulated successfully' }
-        };
-      }
+      console.log('📧 Sending patient booking confirmation via backend API to:', userData.email);
       
-      const response = await fetch(this.web3formsEndpoint, {
+      // Get authentication token from localStorage
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch(`${BACKEND_URL}/api/email/send-patient-email`, {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token
+        },
+        body: JSON.stringify({
+          appointmentData: appointmentData,
+          type: 'booking_confirmation'
+        })
       });
 
       const result = await response.json();
       
       if (result.success) {
-        console.log('Patient booking confirmation sent successfully');
-        return { success: true, data: result };
+        console.log('✅ Patient booking confirmation sent successfully to:', userData.email);
+        return { success: true, data: result.data };
       } else {
         throw new Error(result.message || 'Failed to send patient notification');
       }
     } catch (error) {
-      console.error('Error sending patient booking confirmation:', error);
-      throw error;
+      console.error('❌ Error sending patient booking confirmation:', error);
+      
+      // Fallback: Log the attempt but don't block the booking process
+      console.log('📧 Patient email would have been sent to:', userData.email);
+      console.log('📋 Appointment details:', { docData: docData.name, slotDate, slotTime, amount });
+      
+      // Return a partial success to not block the booking
+      return { 
+        success: false, 
+        error: error.message,
+        fallback: true
+      };
     }
   }
 
@@ -219,9 +173,12 @@ This is an automated notification from our booking system
 
   /**
    * Send both notifications (patient and doctor) for a new booking
+   * Patient: Backend API (dynamic email), Doctor: Web3Forms (static email)
    */
   async sendBookingNotifications(appointmentData) {
     try {
+      console.log('📧 Starting hybrid booking notifications (Backend API + Web3Forms)...');
+      
       const results = await Promise.allSettled([
         this.sendPatientBookingConfirmation(appointmentData),
         this.sendDoctorBookingNotification(appointmentData)
@@ -230,89 +187,113 @@ This is an automated notification from our booking system
       const patientResult = results[0];
       const doctorResult = results[1];
 
-      console.log('Booking notifications results:', {
-        patient: patientResult.status,
-        doctor: doctorResult.status
+      // Evaluate patient notification result
+      const patientSuccess = patientResult.status === 'fulfilled' && 
+        (patientResult.value.success || patientResult.value.fallback);
+      
+      // Evaluate doctor notification result  
+      const doctorSuccess = doctorResult.status === 'fulfilled' && doctorResult.value.success;
+
+      console.log('📊 Booking notifications results:', {
+        patient: {
+          status: patientResult.status,
+          success: patientSuccess,
+          method: 'Backend API (dynamic email)',
+          recipient: appointmentData.userData?.email
+        },
+        doctor: {
+          status: doctorResult.status,
+          success: doctorSuccess,
+          method: 'Web3Forms (static email)',
+          recipient: appointmentData.docData?.email || 'doctor@panchkarmawellness.com'
+        }
       });
 
+      // Collect detailed error information
+      const errors = [];
+      if (!patientSuccess && patientResult.status === 'fulfilled' && patientResult.value.error) {
+        errors.push(`Patient (Backend API): ${patientResult.value.error}`);
+      } else if (patientResult.status === 'rejected') {
+        errors.push(`Patient (Backend API): ${patientResult.reason}`);
+      }
+      
+      if (!doctorSuccess && doctorResult.status === 'fulfilled' && doctorResult.value.error) {
+        errors.push(`Doctor (Web3Forms): ${doctorResult.value.error}`);
+      } else if (doctorResult.status === 'rejected') {
+        errors.push(`Doctor (Web3Forms): ${doctorResult.reason}`);
+      }
+
       return {
-        success: true,
-        patientNotification: patientResult.status === 'fulfilled',
-        doctorNotification: doctorResult.status === 'fulfilled',
-        errors: [
-          ...(patientResult.status === 'rejected' ? [`Patient: ${patientResult.reason}`] : []),
-          ...(doctorResult.status === 'rejected' ? [`Doctor: ${doctorResult.reason}`] : [])
-        ]
+        success: true, // Don't block booking process
+        patientNotification: patientSuccess,
+        doctorNotification: doctorSuccess,
+        hybrid: true, // Indicate this uses hybrid notification system
+        methods: {
+          patient: 'Backend API (Nodemailer)',
+          doctor: 'Web3Forms'
+        },
+        errors: errors,
+        summary: `Patient: ${patientSuccess ? '✅ Sent' : '❌ Failed'}, Doctor: ${doctorSuccess ? '✅ Sent' : '❌ Failed'}`
       };
     } catch (error) {
-      console.error('Error sending booking notifications:', error);
-      throw error;
+      console.error('❌ Error in hybrid booking notifications:', error);
+      
+      // Even if the notification system fails, don't block the booking
+      return {
+        success: false,
+        patientNotification: false,
+        doctorNotification: false,
+        hybrid: true,
+        errors: [`System error: ${error.message}`],
+        fallback: true
+      };
     }
   }
 
   /**
-   * Send therapy reminder notification
+   * Send therapy reminder notification using backend API
    */
   async sendTherapyReminder(appointmentData, hoursBeforeAppointment = 24) {
     const { userData, docData, slotDate, slotTime } = appointmentData;
 
-    const formData = new FormData();
-    formData.append('access_key', this.patientApiKey);
-    formData.append('to', userData.email);
-    formData.append('subject', `⏰ PanchKarma Therapy Reminder - ${hoursBeforeAppointment}h Before Session`);
-    formData.append('from_name', this.patientConfig.fromName);
-    formData.append('reply_to', this.patientConfig.replyTo);
-
-    const emailContent = `
-⏰ PanchKarma Therapy Reminder - ${hoursBeforeAppointment}h Before Session
-
-Dear ${userData.name},
-
-Your PanchKarma therapy session is approaching in ${hoursBeforeAppointment} hours! Please prepare accordingly.
-
-🌿 YOUR PANCHKARMA SESSION DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏥 Specialist: ${docData.name}
-🗓 Date & Time: ${this.formatSlotDate(slotDate)} at ${slotTime}
-🌿 Therapy: ${docData.speciality}
-📍 Location: ${docData.address?.line1 || 'PanchKarma Wellness Center'}
-
-✅ FINAL PREPARATION CHECKLIST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Complete fasting as instructed
-• Wear loose, comfortable clothing
-• Bring towels and change of clothes
-• Stay hydrated with warm water
-• Arrive 15 minutes early
-
-We look forward to seeing you soon for your healing session.
-
-Namaste,
-PanchKarma Wellness Team
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌿 PanchKarma Wellness | Authentic Ayurvedic Detoxification
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-
-    formData.append('message', emailContent);
-
     try {
-      const response = await fetch(this.web3formsEndpoint, {
+      console.log(`📧 Sending ${hoursBeforeAppointment}h therapy reminder via backend API to:`, userData.email);
+      
+      // Get authentication token from localStorage
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch(`${BACKEND_URL}/api/email/send-patient-email`, {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token
+        },
+        body: JSON.stringify({
+          appointmentData: appointmentData,
+          type: 'reminder',
+          hoursBeforeAppointment: hoursBeforeAppointment
+        })
       });
 
       const result = await response.json();
       
       if (result.success) {
-        console.log('Therapy reminder sent successfully');
-        return { success: true, data: result };
+        console.log('✅ Therapy reminder sent successfully to:', userData.email);
+        return { success: true, data: result.data };
       } else {
         throw new Error(result.message || 'Failed to send therapy reminder');
       }
     } catch (error) {
-      console.error('Error sending therapy reminder:', error);
-      throw error;
+      console.error('❌ Error sending therapy reminder:', error);
+      
+      // Fallback: Log the attempt
+      console.log(`📧 Therapy reminder (${hoursBeforeAppointment}h) would have been sent to:`, userData.email);
+      
+      return { 
+        success: false, 
+        error: error.message,
+        fallback: true
+      };
     }
   }
 

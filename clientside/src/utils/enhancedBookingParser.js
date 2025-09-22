@@ -2,8 +2,13 @@
  * Enhanced Natural Language Booking Parser with OpenAI Integration
  */
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 const OPENAI_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+
+// Validate API key on module load
+if (!OPENAI_API_KEY) {
+  console.warn('OpenAI API key not found in environment variables. AI parsing will fall back to basic parsing.');
+}
 
 // Fallback to original parsing if OpenAI fails
 import { parseBookingRequest as originalParseBookingRequest } from './bookingParser.js';
@@ -13,6 +18,12 @@ import { parseBookingRequest as originalParseBookingRequest } from './bookingPar
  */
 export const parseBookingRequestWithAI = async (input, previousContext = null) => {
   try {
+    // If no API key, fall back to original parsing immediately
+    if (!OPENAI_API_KEY) {
+      console.log('No OpenAI API key available, using fallback parsing');
+      return originalParseBookingRequest(input);
+    }
+    
     const today = new Date();
     const todayStr = today.toISOString().split('T')[0];
     const tomorrowStr = new Date(today.getTime() + 24*60*60*1000).toISOString().split('T')[0];

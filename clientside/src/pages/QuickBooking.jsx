@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ModernHeader from '../components/ui/Header';
 import Button from '../components/ui/Button';
 import { AppContext } from '../context/AppContext';
-import { parseBookingRequest, generateFollowUpQuestion } from '../utils/bookingParser';
+import { enhancedParseBookingRequest, generateFollowUpQuestion } from '../utils/enhancedBookingParser';
 import { initializeTherapyNotifications } from '../services/therapyNotificationService';
 import { toast } from 'react-toastify';
 
@@ -50,9 +50,9 @@ const QuickBooking = () => {
     addToConversation(input, true);
     
     try {
-      // Parse the natural language input
-      const parsed = parseBookingRequest(input);
-      console.log('Parsed booking data:', parsed);
+      // Parse the natural language input with AI enhancement
+      const parsed = await enhancedParseBookingRequest(input, parsedData);
+      console.log('AI Enhanced parsed booking data:', parsed);
       
       // If we have existing parsed data, merge it with new data (preserve existing info)
       let mergedData = { ...parsed };

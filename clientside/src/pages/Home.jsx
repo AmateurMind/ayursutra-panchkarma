@@ -31,19 +31,19 @@ const Home = () => {
       {/* Main content with top padding for fixed header */}
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="relative bg-primary rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-4 overflow-hidden">
-          <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-10 lg:px-20 py-10 md:py-16">
+        <section className="relative bg-primary rounded-lg mx-3 sm:mx-4 lg:mx-8 mt-3 sm:mt-4 overflow-hidden">
+          <div className="flex flex-col md:flex-row items-center justify-between px-4 sm:px-6 md:px-10 lg:px-20 py-6 sm:py-8 md:py-16">
             {/* Left Side - Content */}
-            <div className="md:w-1/2 flex flex-col items-start justify-center gap-6 z-10">
-              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl text-primary-foreground font-semibold leading-tight">
-                Experience Authentic <br /> 
-                <span className="text-accent">PanchKarma</span> <br />
-                Detoxification & Healing
+            <div className="md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left justify-center gap-4 sm:gap-6 z-10">
+              <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-primary-foreground font-semibold leading-tight">
+                Experience Authentic <br className="hidden sm:block" /> 
+                <span className="text-accent">PanchKarma</span><br className="hidden sm:block" />
+                <span className="block sm:inline">Detoxification & Healing</span>
               </h1>
               
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-4 text-primary-foreground">
-                <img className="w-28 rounded-lg shadow-breathing" src={assets.group_profiles} alt="Practitioners" />
-                <p className="font-body text-sm md:text-base opacity-90 leading-relaxed">
+              <div className="flex flex-col md:flex-row items-center md:items-center gap-3 sm:gap-4 text-primary-foreground">
+                <img className="w-20 sm:w-24 md:w-28 rounded-lg shadow-breathing" src={assets.group_profiles} alt="Practitioners" />
+                <p className="font-body text-xs sm:text-sm md:text-base opacity-90 leading-relaxed max-w-lg">
                   Transform your health through traditional PanchKarma therapies - Vamana, Virechana, Basti, Nasya & Raktamokshana. 
                   <br className="hidden sm:block" /> 
                   Begin your detoxification journey with certified specialists.
@@ -84,13 +84,13 @@ const Home = () => {
         </section>
 
         {/* Quick Booking Call-to-Action */}
-        <section className="px-4 sm:px-6 lg:px-8 py-8">
+        <section className="px-3 sm:px-4 lg:px-8 py-6 sm:py-8">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-gradient-to-r from-secondary/10 to-accent/10 rounded-2xl p-8 border border-secondary/20">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            <div className="bg-gradient-to-r from-secondary/10 to-accent/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-secondary/20">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 🗣️ Use Instant Booking
               </h2>
-              <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-600 mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed">
                 Simply tell us what you need in plain English - "Book Vamana therapy tomorrow at 4 PM" or "Schedule with Dr. Sharma next Monday"
               </p>
               <Button
@@ -108,7 +108,7 @@ const Home = () => {
         </section>
 
         {/* Existing components with modern styling */}
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-3 sm:px-4 lg:px-8">
           <SpecialityMenu />
           <TopDoctors />
           <Banner />

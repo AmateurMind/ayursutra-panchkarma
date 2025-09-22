@@ -209,32 +209,32 @@ const Appointment = () => {
       
       <main className="pt-16">
         {docInfo && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8 pb-20 sm:pb-8">
             {/* Breadcrumb */}
-            <div className="flex items-center space-x-2 text-sm text-text-secondary mb-8">
+            <div className="flex items-center space-x-2 text-xs sm:text-sm text-text-secondary mb-4 sm:mb-6 lg:mb-8">
               <button
                 onClick={() => navigate('/doctors')}
-                className="hover:text-foreground transition-breathing"
+                className="hover:text-foreground transition-breathing p-2 -ml-2 rounded touch-manipulation"
               >
-                Doctors
+                👩‍⚕️ Specialists
               </button>
-              <Icon name="ChevronRight" size={16} />
-              <span className="text-foreground">{docInfo.name}</span>
+              <Icon name="ChevronRight" size={14} />
+              <span className="text-foreground font-medium">{docInfo.name}</span>
             </div>
 
             {/* Doctor Profile Section */}
-            <div className="bg-card rounded-2xl shadow-breathing overflow-hidden mb-8">
+            <div className="bg-card rounded-xl sm:rounded-2xl shadow-breathing overflow-hidden mb-6 sm:mb-8">
               <div className="flex flex-col lg:flex-row">
                 {/* Doctor Image */}
-                <div className="lg:w-1/3 p-6">
+                <div className="lg:w-1/3 p-4 sm:p-6">
                   <div className="relative">
                     <img
-                      className="w-full h-80 lg:h-96 object-cover rounded-xl shadow-elevated"
+                      className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg sm:rounded-xl shadow-elevated"
                       src={docInfo.image}
                       alt={docInfo.name}
                     />
-                    <div className="absolute top-4 right-4">
-                      <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+                    <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                      <div className={`flex items-center gap-2 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
                         docInfo.available 
                           ? 'bg-success text-success-foreground' 
                           : 'bg-muted text-muted-foreground'
@@ -249,20 +249,20 @@ const Appointment = () => {
                 </div>
 
                 {/* Doctor Info */}
-                <div className="lg:w-2/3 p-6 lg:p-8">
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <h1 className="font-heading text-3xl font-bold text-foreground">
+                <div className="lg:w-2/3 p-4 sm:p-6 lg:p-8">
+                  <div className="flex items-start justify-between mb-4 sm:mb-6">
+                    <div className="w-full">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
+                        <h1 className="font-heading text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
                           {docInfo.name}
                         </h1>
-                        <Icon name="CheckSquare" size={24} className="text-success" />
+                        <Icon name="CheckSquare" size={20} className="text-success sm:mt-1" />
                       </div>
-                      <div className="flex flex-wrap items-center gap-3 mb-4">
-                        <span className="font-body text-text-secondary">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                        <span className="font-body text-sm sm:text-base text-text-secondary">
                           {docInfo.degree} - {docInfo.speciality}
                         </span>
-                        <div className="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full">
+                        <div className="px-2 sm:px-3 py-1 bg-accent/10 text-accent text-xs sm:text-sm font-medium rounded-full">
                           {docInfo.experience} Experience
                         </div>
                       </div>
@@ -270,22 +270,22 @@ const Appointment = () => {
                   </div>
 
                   {/* About Section */}
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Icon name="User" size={20} className="text-text-secondary" />
-                      <h3 className="font-heading text-lg font-semibold text-foreground">
+                  <div className="mb-4 sm:mb-6">
+                    <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                      <Icon name="User" size={18} className="text-text-secondary" />
+                      <h3 className="font-heading text-base sm:text-lg font-semibold text-foreground">
                         About Dr. {docInfo.name.split(' ').pop()}
                       </h3>
                     </div>
-                    <p className="font-body text-text-secondary leading-relaxed">
+                    <p className="font-body text-sm sm:text-base text-text-secondary leading-relaxed">
                       {docInfo.about}
                     </p>
                   </div>
 
                   {/* Consultation Fee */}
-                  <div className="flex items-center justify-between p-4 bg-primary/5 rounded-lg border border-primary/20">
-                    <span className="font-body text-text-secondary">Consultation Fee</span>
-                    <span className="font-heading text-2xl font-bold text-foreground">
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-primary/5 rounded-lg border border-primary/20">
+                    <span className="font-body text-sm sm:text-base text-text-secondary">Consultation Fee</span>
+                    <span className="font-heading text-xl sm:text-2xl font-bold text-foreground">
                       Rs.{docInfo.fees}
                     </span>
                   </div>
@@ -294,35 +294,42 @@ const Appointment = () => {
             </div>
 
             {/* Booking Slots Section */}
-            <div className="bg-card rounded-2xl shadow-breathing p-6 lg:p-8 mb-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Icon name="Calendar" size={24} className="text-primary" />
-                <h2 className="font-heading text-2xl font-bold text-foreground">
+            <div className="bg-card rounded-xl sm:rounded-2xl shadow-breathing p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <Icon name="Calendar" size={20} className="text-primary" />
+                <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
                   Available Slots
                 </h2>
               </div>
 
               {/* Date Selection */}
               <div className="mb-6">
-                <h3 className="font-body text-sm font-medium text-text-secondary mb-4">
-                  Select Date
+                <h3 className="font-body text-sm font-medium text-text-secondary mb-3 sm:mb-4">
+                  📅 Select Date
                 </h3>
-                <div className="flex gap-3 overflow-x-auto pb-2">
+                <div 
+                  className="flex gap-2 sm:gap-3 overflow-x-auto pb-3 scrollbar-hide" 
+                  style={{
+                    scrollbarWidth: 'none', 
+                    msOverflowStyle: 'none',
+                    WebkitOverflowScrolling: 'touch'
+                  }}
+                >
                   {docSlots.length > 0 &&
                     docSlots.map((item, index) => (
                       <button
                         key={index}
                         onClick={() => setSlotIndex(index)}
-                        className={`flex-shrink-0 text-center px-4 py-3 min-w-20 rounded-lg border-2 transition-breathing focus-ring ${
+                        className={`flex-shrink-0 text-center px-3 sm:px-4 py-3 sm:py-4 min-w-16 sm:min-w-20 rounded-lg border-2 transition-all duration-200 touch-manipulation ${
                           slotIndex === index
-                            ? "border-primary bg-primary text-primary-foreground shadow-breathing"
-                            : "border-border bg-card text-text-secondary hover:border-primary/50"
+                            ? "border-primary bg-primary text-primary-foreground shadow-lg transform scale-105"
+                            : "border-border bg-card text-text-secondary hover:border-primary/50 hover:bg-primary/5 active:scale-95"
                         }`}
                       >
                         <p className="text-xs font-medium mb-1">
                           {item[0] && daysOfWeek[item[0].datetime.getDay()]}
                         </p>
-                        <p className="text-lg font-bold">
+                        <p className="text-base sm:text-lg font-bold">
                           {item[0] && item[0].datetime.getDate()}
                         </p>
                       </button>
@@ -331,20 +338,20 @@ const Appointment = () => {
               </div>
 
               {/* Time Selection */}
-              <div className="mb-8">
-                <h3 className="font-body text-sm font-medium text-text-secondary mb-4">
-                  Select Time
+              <div className="mb-6 sm:mb-8">
+                <h3 className="font-body text-sm font-medium text-text-secondary mb-3 sm:mb-4">
+                  ⏰ Select Time
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {docSlots.length > 0 &&
                     docSlots[slotIndex]?.map((item, index) => (
                       <button
                         key={index}
                         onClick={() => setSlotTime(item.time)}
-                        className={`px-4 py-3 rounded-lg border-2 text-sm font-medium transition-breathing focus-ring ${
+                        className={`px-3 sm:px-4 py-3 sm:py-4 rounded-lg border-2 text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation min-h-12 ${
                           item.time === slotTime
-                            ? "border-primary bg-primary text-primary-foreground shadow-breathing"
-                            : "border-border bg-card text-text-secondary hover:border-primary/50 hover:bg-primary/5"
+                            ? "border-primary bg-primary text-primary-foreground shadow-lg transform scale-105"
+                            : "border-border bg-card text-text-secondary hover:border-primary/50 hover:bg-primary/5 active:scale-95"
                         }`}
                       >
                         {item.time}
@@ -354,24 +361,46 @@ const Appointment = () => {
               </div>
 
               {/* Book Button */}
-              <div className="flex justify-end">
+              <div className="flex flex-col sm:flex-row justify-end gap-3">
+                {!slotTime && (
+                  <div className="text-center sm:text-right">
+                    <p className="text-sm text-text-secondary mb-2">
+                      📅 Please select a date and time to book
+                    </p>
+                  </div>
+                )}
                 <Button
                   onClick={bookAppointment}
                   disabled={!slotTime}
                   size="lg"
-                  className="px-8"
+                  className={`px-6 sm:px-8 w-full sm:w-auto min-h-12 ${!slotTime ? 'opacity-50' : ''}`}
                   iconName="Calendar"
                   iconPosition="left"
                 >
-                  Book Consultation
+                  💳 Book Consultation
                 </Button>
               </div>
+              
+              {/* Mobile Floating Action Button */}
+              {slotTime && (
+                <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
+                  <Button
+                    onClick={bookAppointment}
+                    size="lg"
+                    className="w-full shadow-2xl bg-primary hover:bg-primary/90 text-primary-foreground min-h-14 text-base font-semibold"
+                    iconName="Calendar"
+                    iconPosition="left"
+                  >
+                    💳 Book for Rs.{docInfo.fees} - {slotTime}
+                  </Button>
+                </div>
+              )}
             </div>
 
             {/* Related Doctors Section */}
-            <div className="bg-card rounded-2xl shadow-breathing p-6 lg:p-8">
-              <h2 className="font-heading text-2xl font-bold text-foreground mb-6">
-                Related Doctors
+            <div className="bg-card rounded-xl sm:rounded-2xl shadow-breathing p-4 sm:p-6 lg:p-8">
+              <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-4 sm:mb-6">
+                👩‍⚕️ Related Specialists
               </h2>
               <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
             </div>

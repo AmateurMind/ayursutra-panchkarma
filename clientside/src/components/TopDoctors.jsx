@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import Button from './ui/Button';
+
 
 const TopDoctors = () => {
   const navigate = useNavigate();
@@ -44,15 +46,17 @@ const TopDoctors = () => {
           </div>
         ))}
       </div>
-      <button
+      <Button
+        variant="secondary"
         onClick={() => {
           navigate("/doctors");
           scrollTo(0, 0);
         }}
-        className="bg-primary bg-opacity-10 text-gray-700 px-8 sm:px-12 py-3 rounded-full mt-6 sm:mt-10 hover:bg-primary hover:text-white transition-all duration-300 text-sm sm:text-base font-medium touch-target min-h-[44px] min-w-[44px]"
+        className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-elevated hover-lift"
       >
         View All Specialists
-      </button>
+      </Button>
+
     </div>
   );
 };

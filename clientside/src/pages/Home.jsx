@@ -88,15 +88,15 @@ const Home = () => {
           <div className="max-w-4xl mx-auto text-center">
             <div className="bg-gradient-to-r from-secondary/10 to-accent/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-secondary/20">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-                🗣️ Use Instant Booking
+                Use Instant Booking
               </h2>
               <p className="text-sm sm:text-base lg:text-lg text-gray-600 mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed">
                 Simply tell us what you need in plain English - "Book Vamana therapy tomorrow at 4 PM" or "Schedule with Dr. Sharma next Monday"
               </p>
               <Button
-                variant="primary"
+                variant="secondary"
                 size="lg"
-                className="bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white shadow-elevated hover-lift"
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-elevated hover-lift"
                 iconName="MessageCircle"
                 iconPosition="right"
                 onClick={() => navigate('/quick-booking')}

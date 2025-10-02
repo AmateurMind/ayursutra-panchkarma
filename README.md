@@ -2,7 +2,7 @@ LIVE DEMO:
 https://ayursutra-clientside.onrender.com/
 ```markdown
 # 🌿 AYURSUTRA - Ayurvedic Appointment Booking System
-A comprehensive digital p![Uploading Screenshot 2025-10-02 201008.png…]()
+A comprehensive digital p<img width="1913" height="869" alt="Screenshot 2025-10-02 201008" src="https://github.com/user-attachments/assets/d7c9cb40-718a-46be-8850-d9a11fa16e2a" />
 latform connecting wellness seekers with Ayurvedic specialists, featuring appointment booking, profile management, and administrative tools.
 
 ## 🏗️ System Architecture
@@ -120,16 +120,12 @@ Ensure all environment variables are configured in your hosting platform's dashb
 5. Open a Pull Request
 
 
-<img width="1913" height="869" alt="Screenshot 2025-10-02 201008" src="https://github.com/user-attachments/assets/1fe6fea6-02f9-476f-aa03-3d796b919fa7" />
+<img width="1913" height="869" alt="Screenshot 2025-10-02 201008 - Copy" src="https://github.com/user-attachments/assets/b233461d-ee3b-4f9d-9528-71a1ba625997" />
+<img width="1916" height="862" alt="Screenshot 2025-10-02 201236 - Copy" src="https://github.com/user-attachments/assets/229cddce-1760-4198-96e3-880ff522b0dd" />
+<img width="1917" height="879" alt="Screenshot 2025-10-02 201310 - Copy" src="https://github.com/user-attachments/assets/870f7ce0-cb34-4d46-8bd2-de3b2e2f4d84" />
+<img width="1919" height="866" alt="Screenshot 2025-10-02 201342 - Copy" src="https://github.com/user-attachments/assets/14a766e8-8cba-49e0-8566-3e3571c6d4b0" />
+<img width="1918" height="873" alt="Screenshot 2025-10-02 201519 - Copy" src="https://github.com/user-attachments/assets/3f28f96a-2685-4730-9e6c-2641e04b7d5f" />
+<img width="1730" height="872" alt="Screenshot 2025-10-02 201544 - Copy" src="https://github.com/user-attachments/assets/c7151e63-8d93-405a-98d9-dbfecc867e13" />
+<img width="1608" height="874" alt="Screenshot 2025-10-02 201631 - Copy" src="https://github.com/user-attachments/assets/2d4b8f5b-7aad-459e-b948-a6ff70ec912f" />
+<img width="1733" height="876" alt="Screenshot 2025-10-02 201647 - Copy" src="https://github.com/user-attachments/assets/08ae0e12-571f-4c77-b61f-7074b0e31549" />
 
-<img width="1916" height="862" alt="Screenshot 2025-10-02 201236" src="https://github.com/user-attachments/assets/510757b5-4110-4adf-91b6-e59a8a05e14b" />
-
-<img width="1917" height="879" alt="Screenshot 2025-10-02 201310" src="https://github.com/user-attachments/assets/c6c62015-278e-4978-83ad-a4c1d623a8c1" />
-
-<img width="1919" height="866" alt="Screenshot 2025-10-02 201342" src="https://github.com/user-attachments/assets/cf98822f-a7f6-462c-bff7-4cf5076ed922" />
-
-<img width="1730" height="872" alt="Screenshot 2025-10-02 201544" src="https://github.com/user-attachments/assets/9e7fdbef-a1e0-4b07-abee-4c5696e0f763" />
-
-<img width="1608" height="874" alt="Screenshot 2025-10-02 201631" src="https://github.com/user-attachments/assets/f6d657f6-2ea1-44eb-8778-7c4fb0e94aa7" />
-
-<img width="1733" height="876" alt="Screenshot 2025-10-02 201647" src="https://github.com/user-attachments/assets/53ccbcd0-e551-436c-9f32-8ebbb0345afc" />

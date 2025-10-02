@@ -119,13 +119,10 @@ Ensure all environment variables are configured in your hosting platform's dashb
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
-<img width="1913" height="869" alt="Screenshot 2025-10-02 201008 - Copy" src="https://github.com/user-attachments/assets/b233461d-ee3b-4f9d-9528-71a1ba625997" />
-<img width="1916" height="862" alt="Screenshot 2025-10-02 201236 - Copy" src="https://github.com/user-attachments/assets/229cddce-1760-4198-96e3-880ff522b0dd" />
-<img width="1917" height="879" alt="Screenshot 2025-10-02 201310 - Copy" src="https://github.com/user-attachments/assets/870f7ce0-cb34-4d46-8bd2-de3b2e2f4d84" />
-<img width="1919" height="866" alt="Screenshot 2025-10-02 201342 - Copy" src="https://github.com/user-attachments/assets/14a766e8-8cba-49e0-8566-3e3571c6d4b0" />
-<img width="1918" height="873" alt="Screenshot 2025-10-02 201519 - Copy" src="https://github.com/user-attachments/assets/3f28f96a-2685-4730-9e6c-2641e04b7d5f" />
-<img width="1730" height="872" alt="Screenshot 2025-10-02 201544 - Copy" src="https://github.com/user-attachments/assets/c7151e63-8d93-405a-98d9-dbfecc867e13" />
-<img width="1608" height="874" alt="Screenshot 2025-10-02 201631 - Copy" src="https://github.com/user-attachments/assets/2d4b8f5b-7aad-459e-b948-a6ff70ec912f" />
-<img width="1733" height="876" alt="Screenshot 2025-10-02 201647 - Copy" src="https://github.com/user-attachments/assets/08ae0e12-571f-4c77-b61f-7074b0e31549" />
+<img width="1913" height="869" alt="Screenshot 2025-10-02 201008 - Copy" src="https://github.com/user-attachments/assets/27e502b1-5bbf-4545-a8fe-331ad9940565" />
+<img width="621" height="298" alt="Screenshot 2025-10-02 201225" src="https://github.com/user-attachments/assets/91941004-8b45-4991-ba9e-72392f8f40d0" />
+<img width="1916" height="862" alt="Screenshot 2025-10-02 201236" src="https://github.com/user-attachments/assets/133da0f1-569f-4d97-915c-e3f3df55be28" />
+<img width="1917" height="879" alt="Screenshot 2025-10-02 201310" src="https://github.com/user-attachments/assets/7f38e29c-a425-44ea-a73c-edc33467549d" />
+<img width="1608" height="874" alt="Screenshot 2025-10-02 201631" src="https://github.com/user-attachments/assets/bbad2a57-b1fa-4c12-a1b4-92916af9ae6e" />
+<img width="1733" height="876" alt="Screenshot 2025-10-02 201647" src="https://github.com/user-attachments/assets/567e5921-8a08-4ae3-8156-d69bd6508f6f" />
 

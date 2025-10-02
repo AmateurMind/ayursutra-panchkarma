@@ -1,13 +1,5 @@
 LIVE DEMO:
 https://ayursutra-clientside.onrender.com/
-<img width="1913" height="869" alt="Screenshot 2025-10-02 201008" src="https://github.com/user-attachments/assets/1fe6fea6-02f9-476f-aa03-3d796b919fa7" />
-<img width="1916" height="862" alt="Screenshot 2025-10-02 201236" src="https://github.com/user-attachments/assets/510757b5-4110-4adf-91b6-e59a8a05e14b" />
-<img width="1917" height="879" alt="Screenshot 2025-10-02 201310" src="https://github.com/user-attachments/assets/c6c62015-278e-4978-83ad-a4c1d623a8c1" />
-<img width="1919" height="866" alt="Screenshot 2025-10-02 201342" src="https://github.com/user-attachments/assets/cf98822f-a7f6-462c-bff7-4cf5076ed922" />
-<img width="1730" height="872" alt="Screenshot 2025-10-02 201544" src="https://github.com/user-attachments/assets/9e7fdbef-a1e0-4b07-abee-4c5696e0f763" />
-<img width="1608" height="874" alt="Screenshot 2025-10-02 201631" src="https://github.com/user-attachments/assets/f6d657f6-2ea1-44eb-8778-7c4fb0e94aa7" />
-<img width="1733" height="876" alt="Screenshot 2025-10-02 201647" src="https://github.com/user-attachments/assets/53ccbcd0-e551-436c-9f32-8ebbb0345afc" />
-
 ```markdown
 # 🌿 AYURSUTRA - Ayurvedic Appointment Booking System
 A comprehensive digital p![Uploading Screenshot 2025-10-02 201008.png…]()
@@ -127,4 +119,17 @@ Ensure all environment variables are configured in your hosting platform's dashb
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-See ya!
+
+<img width="1913" height="869" alt="Screenshot 2025-10-02 201008" src="https://github.com/user-attachments/assets/1fe6fea6-02f9-476f-aa03-3d796b919fa7" />
+
+<img width="1916" height="862" alt="Screenshot 2025-10-02 201236" src="https://github.com/user-attachments/assets/510757b5-4110-4adf-91b6-e59a8a05e14b" />
+
+<img width="1917" height="879" alt="Screenshot 2025-10-02 201310" src="https://github.com/user-attachments/assets/c6c62015-278e-4978-83ad-a4c1d623a8c1" />
+
+<img width="1919" height="866" alt="Screenshot 2025-10-02 201342" src="https://github.com/user-attachments/assets/cf98822f-a7f6-462c-bff7-4cf5076ed922" />
+
+<img width="1730" height="872" alt="Screenshot 2025-10-02 201544" src="https://github.com/user-attachments/assets/9e7fdbef-a1e0-4b07-abee-4c5696e0f763" />
+
+<img width="1608" height="874" alt="Screenshot 2025-10-02 201631" src="https://github.com/user-attachments/assets/f6d657f6-2ea1-44eb-8778-7c4fb0e94aa7" />
+
+<img width="1733" height="876" alt="Screenshot 2025-10-02 201647" src="https://github.com/user-attachments/assets/53ccbcd0-e551-436c-9f32-8ebbb0345afc" />

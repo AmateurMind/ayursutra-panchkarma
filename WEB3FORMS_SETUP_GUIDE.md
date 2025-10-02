@@ -1,4 +1,3 @@
-# 🌿 PanchKarma Wellness - Web3Forms API Keys Setup Guide
 
 This guide will help you configure your Web3Forms API keys for the PanchKarma therapy booking notification system.
 

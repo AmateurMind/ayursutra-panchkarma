@@ -2,8 +2,6 @@ LIVE DEMO:
 https://ayursutra-clientside.onrender.com/
 <img width="1913" height="869" alt="Screenshot 2025-10-02 201008 - Copy" src="https://github.com/user-attachments/assets/27e502b1-5bbf-4545-a8fe-331ad9940565" />
 
-<img width="621" height="298" alt="Screenshot 2025-10-02 201225" src="https://github.com/user-attachments/assets/91941004-8b45-4991-ba9e-72392f8f40d0" />
-
 <img width="1916" height="862" alt="Screenshot 2025-10-02 201236" src="https://github.com/user-attachments/assets/133da0f1-569f-4d97-915c-e3f3df55be28" />
 
 <img width="1917" height="879" alt="Screenshot 2025-10-02 201310" src="https://github.com/user-attachments/assets/7f38e29c-a425-44ea-a73c-edc33467549d" />

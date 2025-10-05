@@ -1,0 +1,16 @@
+{
+  "react": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  "node": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+  "express": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+  "mongodb": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+  "jsonwebtoken": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/jsonwebtokens.svg",
+  "gmail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg",
+  "razorpay": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/razorpay.svg",
+  "cloudinary": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/cloudinary.svg",
+  "openai": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg",
+  "owasp": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/owasp.svg",
+  "clock": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/clockify.svg",
+  "sentry": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/sentry.svg",
+  "vercel": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg",
+  "render": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/render.svg"
+}

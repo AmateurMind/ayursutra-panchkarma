@@ -18,6 +18,7 @@ const AutoLaunchChatbot = () => {
   const chatbotRef = useRef(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const lastRequestTime = useRef(0);
 
   // Initialize position based on current window size
   useEffect(() => {
@@ -171,15 +172,26 @@ const AutoLaunchChatbot = () => {
   };
 
   const sendMessageToGemini = async (message) => {
+    const now = Date.now();
+    const timeSinceLastRequest = now - lastRequestTime.current;
+    if (timeSinceLastRequest < 1000) { // 1 second minimum interval
+      const delay = 1000 - timeSinceLastRequest;
+      console.log(`Rate limiting: waiting ${delay}ms before next request`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+    lastRequestTime.current = Date.now();
+
     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-    
+
     if (!API_KEY) {
       console.error('Gemini API key not found in environment variables');
       return "I'm sorry, the chatbot service is not properly configured. Please contact support.";
     }
-    
-    const MODEL_NAME = "gemini-2.0-flash";
+
+    const MODEL_NAME = "gemini-2.5-flash";
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+    console.log('Making API request to Gemini for message:', message.substring(0, 50) + '...');
 
     try {
       const response = await fetch(API_URL, {
@@ -214,6 +226,7 @@ const AutoLaunchChatbot = () => {
       });
 
       if (!response.ok) {
+        console.log('API response not ok, status:', response.status);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -233,8 +246,12 @@ const AutoLaunchChatbot = () => {
 
       if (error.message.includes('403')) {
         return "I'm sorry, there seems to be an authentication issue. Please check the API configuration.";
-      } else if (error.message.includes('429')) {
-        return "I'm receiving too many requests right now. Please wait a moment and try again.";
+      } else if (error.message.includes('429') || error.message.includes('503')) {
+        // Retry with exponential backoff for rate limiting (429) or service unavailable (503)
+        const retryDelay = Math.min(1000 * Math.pow(2, Math.floor(Math.random() * 3) + 1), 10000); // 2-8s, max 10s
+        console.log(`${error.message.includes('429') ? '429' : '503'} error, retrying after ${retryDelay}ms`);
+        await new Promise(resolve => setTimeout(resolve, retryDelay));
+        return await sendMessageToGemini(message); // Recursive retry
       } else {
         return "I'm sorry, I'm having trouble connecting to the server. Please try again later.";
       }
@@ -244,6 +261,8 @@ const AutoLaunchChatbot = () => {
   const handleSendMessage = useCallback(async () => {
     const trimmedMessage = inputMessage.trim();
     if (!trimmedMessage || isLoading) return;
+
+    console.log('Sending message:', trimmedMessage);
 
     const userMessage = {
       id: Date.now(),

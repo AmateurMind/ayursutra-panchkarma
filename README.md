@@ -131,4 +131,6 @@ Ensure all environment variables are configured in your hosting platform's dashb
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+see ya
+
 

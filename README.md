@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=AmateurMind&repo=ayursuta-panchkarma&color=blue" />
+</p>
 LIVE DEMO:
 https://ayursutra-clientside.onrender.com/
 
